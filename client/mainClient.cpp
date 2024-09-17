@@ -3,7 +3,6 @@
 #include <LogManager.h>
 
 #include "ClientSample.h"
-#include <SharedSample.h>
 
 int main(int argc, char** argv) {
     // Start up game manager.
@@ -14,7 +13,6 @@ int main(int argc, char** argv) {
     }
 
     LM.writeLog(ClientSample::clientString.c_str());
-    LM.writeLog(SharedSample::sharedString.c_str());
 
     // Show splash screen.
     df::splash();
