@@ -54,11 +54,13 @@
     <IncludePath>$(solutiondir)libraries\SFML-2.6.1\include;$(solutiondir)libraries\Dragonfly\include;$(solutiondir)shared;$(IncludePath)</IncludePath>
     <LibraryPath>$(solutiondir)libraries\SFML-2.6.1\lib;$(solutiondir)libraries\Dragonfly\lib;$(solutiondir)shared\build\lib;$(LibraryPath)</LibraryPath>
     <TargetName>fruit-ninja-client</TargetName>
+    <OutDir>$(SolutionDir)$(Platform)-Build\$(Configuration)\$(targetname)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(solutiondir)libraries\SFML-2.6.1\include;$(solutiondir)libraries\Dragonfly\include;$(solutiondir)shared;$(IncludePath)</IncludePath>
     <LibraryPath>$(solutiondir)libraries\SFML-2.6.1\lib;$(solutiondir)libraries\Dragonfly\lib;$(solutiondir)shared\build\lib;$(LibraryPath)</LibraryPath>
     <TargetName>fruit-ninja-client</TargetName>
+    <OutDir>$(SolutionDir)$(Platform)-Build\$(Configuration)\$(targetname)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
