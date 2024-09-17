@@ -77,9 +77,12 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(projectdir)df-config.txt" "$(outdir)" /Y
+
 xcopy "$(projectdir)df-font.ttf" "$(outdir)" /Y
-xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\*-2.dll" "$(outdir)" /Y
-del "$(outdir)*-d-2.dll"</Command>
+
+xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\*-d-2.dll" "$(outdir)" /Y
+xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\openal32.dll" "$(outdir)" /Y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -101,8 +104,13 @@ del "$(outdir)*-d-2.dll"</Command>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(projectdir)df-config.txt" "$(outdir)" /Y
+
 xcopy "$(projectdir)df-font.ttf" "$(outdir)" /Y
-xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\*-d-2.dll" "$(outdir)" /Y</Command>
+
+xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\*-2.dll" "$(outdir)" /Y
+
+del "$(outdir)*-d-2.dll"
+xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\openal32.dll" "$(outdir)" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
