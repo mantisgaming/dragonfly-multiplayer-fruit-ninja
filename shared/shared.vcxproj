@@ -75,6 +75,7 @@
       <AdditionalDependencies>libdragonfly-x64-debug.lib;sfml-system-d.lib;sfml-main-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Name>
       </Name>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
       <Command>xcopy "$(outdir)*.lib" "$(projectdir)build\lib" /I /Y
@@ -99,6 +100,7 @@ xcopy "$(projectdir)*.h" "$(projectdir)build\include" /I /Y</Command>
     <Lib>
       <AdditionalDependencies>libdragonfly-x64-release.lib;sfml-system.lib;sfml-main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Name>fruit-ninja-shared.lib</Name>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
       <Command>xcopy "$(outdir)*.lib" "$(projectdir)build\lib" /I /Y
