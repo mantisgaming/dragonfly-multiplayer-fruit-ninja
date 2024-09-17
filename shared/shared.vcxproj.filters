@@ -15,12 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SharedSample.h">
+    <ClInclude Include="NetworkManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkSocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SharedSample.cpp">
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

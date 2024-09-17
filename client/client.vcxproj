@@ -17,6 +17,12 @@
   <ItemGroup>
     <ClInclude Include="ClientSample.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="df-config.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="df-font.ttf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -68,6 +74,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NO_NETWORK;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,6 +97,7 @@ del "$(outdir)*-d-2.dll"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NO_NETWORK;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

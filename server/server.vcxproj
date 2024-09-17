@@ -17,6 +17,12 @@
     <ClCompile Include="mainServer.cpp" />
     <ClCompile Include="ServerSample.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="df-config.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="df-font.ttf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -68,6 +74,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NO_NETWORK;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -89,6 +96,7 @@ xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\*-d-2.dll" "$(outdir)" /Y</Command
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NO_NETWORK;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
