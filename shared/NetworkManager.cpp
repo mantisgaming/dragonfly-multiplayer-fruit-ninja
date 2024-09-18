@@ -5,8 +5,7 @@
 #include <WS2tcpip.h>
 #include <io.h>
 
-#include <LogManager.h>
-
+#include "NetworkUtil.h"
 
 namespace df {
 
@@ -36,25 +35,6 @@ namespace df {
 		return NME_SUCCESS;
 	}
 
-	// write a network error to the log file
-	void print_network_error(const char* message) {
-		LPTSTR error_text = NULL;
-		FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM
-			| FORMAT_MESSAGE_ALLOCATE_BUFFER
-			| FORMAT_MESSAGE_IGNORE_INSERTS,
-			NULL,
-			WSAGetLastError(),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			(LPTSTR)&error_text,  /* Output. */
-			0, /* Min. size for output buffer. */
-			NULL);
-		if (error_text != NULL) {
-			LM.writeLog("%s: %d - %S", message, WSAGetLastError(), error_text);
-			LocalFree(error_text);
-			error_text = NULL;
-		}
-	}
-
 	int NetworkManager::setServer(bool server) {
 
 		// if already in the correct mode, do nothing
@@ -72,7 +52,7 @@ namespace df {
 		// initialize WSA
 		WSADATA wsa;
 		if (WSAStartup(MAKEWORD(2, 2), &wsa) != NO_ERROR) {
-			print_network_error("WSAStartup() failed");
+			logNetworkError("WSAStartup() failed");
 			return NME_WSASTARTUP_FAILED;
 		}
 
@@ -83,7 +63,7 @@ namespace df {
 
 		// shutdown WSA
 		if (WSACleanup() != NO_ERROR) {
-			print_network_error("WSACleanup() failed");
+			logNetworkError("WSACleanup() failed");
 		}
 
 	}
