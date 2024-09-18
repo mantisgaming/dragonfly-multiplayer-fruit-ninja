@@ -4,6 +4,8 @@
 #include <sstream>
 
 #include "NetworkUtil.h"
+#include "EventNetwork.h"
+#include "WorldManager.h"
 
 // guard clause macros
 #define REQUIRE_SOCKET		\
@@ -90,7 +92,10 @@ namespace df {
 				return 0;
 			case WSAECONNRESET:
 				LM.writeLog("A connection was reset");
-				// TODO trigger disconnect event
+				{
+					EventNetwork e = EventNetwork(this, EventNetwork::Label::CLOSE);
+					WM.onEvent(&e);
+				}
 				close();
 				return -1;
 			default:
@@ -113,7 +118,10 @@ namespace df {
 				return 0;
 			case WSAECONNRESET:
 				LM.writeLog("A connection was reset");
-				// TODO trigger disconnect event
+				{
+					EventNetwork e = EventNetwork(this, EventNetwork::Label::CLOSE);
+					WM.onEvent(&e);
+				}
 				close();
 				return -1;
 			default:

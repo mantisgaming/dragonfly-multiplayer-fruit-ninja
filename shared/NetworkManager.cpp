@@ -7,6 +7,8 @@
 #include <WS2tcpip.h>
 #include <io.h>
 
+#include <WorldManager.h>
+
 #include "EventNetwork.h"
 
 
@@ -52,6 +54,8 @@ namespace df {
 
 	void NetworkManager::accept()
 	{
+		if (!isServer()) return;
+
 		while (true) {
 			NetworkSocket* sock = new NetworkSocket();
 			// if the accept call fails or the socket is not connected, break the loop
@@ -60,7 +64,8 @@ namespace df {
 				return;
 			}
 
-			// TODO create accept event
+			EventNetwork e = EventNetwork(sock, EventNetwork::Label::ACCEPT);
+			WM.onEvent(&e);
 
 			m_connections.push_back(sock);
 		}
@@ -74,19 +79,25 @@ namespace df {
 
 	void NetworkManager::recieve() {
 		for (int i = 0; i < m_connections.size(); i++) {
-			char* data;
+			char* data = NULL;
 			int dataSize = m_connections[i]->receive(data);
 
 			if (dataSize > 0) {
-				// TODO create data event
+				EventNetwork e = EventNetwork(m_connections[i], EventNetwork::Label::DATA, data, (uint16_t)dataSize);
+				WM.onEvent(&e);
 			}
+
+			if (data != NULL)
+				delete[] data;
 		}
 	}
 
 	void NetworkManager::closeAll()
 	{
 		for (int i = 0; i < m_connections.size(); i++) {
-			// TODO create disconnect event
+			
+			EventNetwork e = EventNetwork(m_connections[i], EventNetwork::Label::CLOSE);
+			WM.onEvent(&e);
 
 			delete (m_connections[i]);
 		}
@@ -98,7 +109,9 @@ namespace df {
 	{
 		for (int i = 0; i < m_connections.size(); i++) {
 			if (!m_connections[i]->isConnected()) {
-				// TODO create disconnect event
+				
+				EventNetwork e = EventNetwork(m_connections[i], EventNetwork::Label::CLOSE);
+				WM.onEvent(&e);
 
 				delete (m_connections[i]);
 				m_connections[i] = m_connections[m_connections.size() - 1];

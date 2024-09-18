@@ -6,12 +6,8 @@ namespace df {
 
     int NetworkSentry::stepHandler(const EventStep* p_event)
     {
-        if (NM.isServer()) {
-            NM.accept();
-        }
-
+        NM.accept();
         NM.recieve();
-
         return 1;
     }
 
