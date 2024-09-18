@@ -92,6 +92,29 @@ namespace df {
 		}
 	}
 
+	int NetworkManager::connect(std::string address, uint16_t port)
+	{
+		uint64_t ip;
+		if (getAddress(address, &ip)) {
+			return -1;
+		}
+		
+		NetworkSocket* sock = new NetworkSocket();
+
+		if (sock->create()) {
+			delete sock;
+			return -1;
+		}
+
+		if (sock->connect(ip, port)) {
+			delete sock;
+			return -1;
+		}
+
+		m_connections.push_back(sock);
+		return 0;
+	}
+
 	void NetworkManager::closeAll()
 	{
 		for (int i = 0; i < m_connections.size(); i++) {

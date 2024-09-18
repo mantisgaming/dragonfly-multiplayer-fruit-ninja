@@ -11,11 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EventNetwork.h" />
+    <ClInclude Include="NetworkSentry.h" />
     <ClInclude Include="NetworkSocket.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="NetworkUtil.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EventNetwork.cpp" />
+    <ClCompile Include="NetworkSentry.cpp" />
     <ClCompile Include="NetworkSocket.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="NetworkUtil.cpp" />

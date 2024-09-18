@@ -24,6 +24,12 @@
     <ClInclude Include="NetworkUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NetworkSentry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventNetwork.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetworkManager.cpp">
@@ -33,6 +39,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NetworkUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkSentry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

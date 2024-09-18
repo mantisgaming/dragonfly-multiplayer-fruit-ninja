@@ -35,6 +35,7 @@ namespace df {
 		void accept();
 		void sendToAll(char* data, int dataSize);
 		void recieve();
+		int connect(std::string address, uint16_t port);
 
 		void closeAll();
 		void checkConnections();
