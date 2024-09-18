@@ -7,6 +7,8 @@
 #include <WS2tcpip.h>
 #include <io.h>
 
+#include "EventNetwork.h"
+
 
 namespace df {
 
