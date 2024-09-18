@@ -46,7 +46,7 @@ headless:false,
 font_file:df-font.ttf,
 
 # Log file for Dragonfly output.
-logfile:dragonfly.log,
+logfile:dragonfly-client.log,
 
 # Random seed (0 means use current time, -1 means don't seed).
 random_seed:0,

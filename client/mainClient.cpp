@@ -1,8 +1,7 @@
 
 #include <GameManager.h>
 #include <LogManager.h>
-
-#include "ClientSample.h"
+#include <NetworkManager.h>
 
 int main(int argc, char** argv) {
     // Start up game manager.
@@ -12,7 +11,12 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    LM.writeLog(ClientSample::clientString.c_str());
+    if (NM.startUp()) {
+        LM.writeLog("Error starting network manager!");
+        NM.shutDown();
+        GM.shutDown();
+        return 0;
+    }
 
     // Show splash screen.
     df::splash();

@@ -1,31 +1,26 @@
 #pragma once
 
 #include <vector>
-#include <Manager.h>
+#include <stdint.h>
 
 #include "NetworkSocket.h"
 
-#define NME_SUCCESS 0
-#define NME_NOTHING_TO_DO -1
-#define NME_WSASTARTUP_FAILED -2
-
 #define NM df::NetworkManager::getInstance()
+
+#define DEFAULT_PORT 9876
 
 namespace df {
 
-	class NetworkManager : Manager {
+	class NetworkManager {
 
 	private:
-		NetworkSocket* listener;
-		std::vector<NetworkSocket*> connections;
+		NetworkSocket* m_listener;
+		std::vector<NetworkSocket*> m_connections;
 		static inline NetworkManager* instance = NULL;
 
 		NetworkManager();
 		NetworkManager(NetworkManager& other);
 		NetworkManager& operator=(NetworkManager& other);
-
-		int initializeServer();
-		int shutdownServer();
 
 	public:
 		inline static NetworkManager& getInstance() {
@@ -33,11 +28,22 @@ namespace df {
 			return nm;
 		}
 
-		int setServer(bool server);
-		inline bool isServer() { return listener != NULL; }
+		int startupServer(uint16_t port);
+		int shutdownServer();
+		inline bool isServer() { return m_listener != NULL; }
 
-		int startUp() override;
-		void shutDown() override;
+		void accept();
+		void sendToAll(char* data, int dataSize);
+		void recieve();
+
+		void closeAll();
+		void checkConnections();
+		bool hasConnection(NetworkSocket* sock);
+		int getConnectionCount();
+		int getConnections(NetworkSocket**& sockets);
+
+		int startUp();
+		void shutDown();
 	};
 
 }

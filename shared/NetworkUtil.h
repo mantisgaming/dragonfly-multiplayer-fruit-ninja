@@ -1,3 +1,7 @@
 #pragma once
 
-void print_network_error(const char* message);
+#include <string>
+#include <stdint.h>
+
+void logNetworkError(const char* message);
+int getAddress(std::string hostname, uint64_t* address);

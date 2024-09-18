@@ -40,13 +40,13 @@ window_title:Dragonfly,
 show_mouse:false,
 
 # Run in headless mode (no graphics window or input).
-headless:false,
+headless:true,
 
 # Font file for all ASCII fonts.
 font_file:df-font.ttf,
 
 # Log file for Dragonfly output.
-logfile:dragonfly.log,
+logfile:dragonfly-server.log,
 
 # Random seed (0 means use current time, -1 means don't seed).
 random_seed:0,

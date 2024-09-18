@@ -21,12 +21,18 @@
     <ClInclude Include="NetworkSocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NetworkUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetworkManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NetworkSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
