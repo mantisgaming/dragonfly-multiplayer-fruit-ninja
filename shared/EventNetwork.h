@@ -21,16 +21,14 @@ namespace df {
 	private:
 		Label m_label;
 		NetworkSocket* m_socket;
-		uint16_t m_bytes;
-		char* m_data;
+		NetworkMessage* m_message;
 
 	public:
-		EventNetwork(NetworkSocket* socket = NULL, Label label = UNDEFINED, char* data = NULL, uint16_t bytes = 0);
+		EventNetwork(NetworkSocket* socket = NULL, Label label = UNDEFINED, NetworkMessage* message);
 
 		inline Label getLabel() { return m_label; };
 		inline NetworkSocket* getSocket() { return m_socket; };
-		inline uint16_t getBytes() { return m_bytes; };
-		inline char* getData() { return m_data; };
+		inline const NetworkMessage* getMessage() { return m_message; };
 	};
 
 }

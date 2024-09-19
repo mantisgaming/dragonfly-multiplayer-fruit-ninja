@@ -1,4 +1,7 @@
 #include "NetworkObject.h"
+#include "NetworkMessage.h"
+#include <sstream>
+#include <LogManager.h>
 
 std::vector<uint8_t>* NetworkObject::freeIDs = NULL;
 
@@ -24,8 +27,23 @@ int NetworkObject::eventHandler(const df::Event* p_e) {
 	return 0;
 }
 
-void NetworkObject::synchronize() {
-	// TODO synchronize
+void NetworkObject::synchronize(unsigned int attr) {
+	NetworkMessage syncMsg;
+	syncMsg.m_type
+
+	std::stringstream stream;
+	serialize(&stream, attr);
+	
+	std::string result = stream.rdbuf()->str();
+
+	if (result.length() > sizeof(syncMsg.m_syncData)) {
+		LM.writeLog("Attemtped to synchronize object with too much data");
+		return;
+	}
+
+	memcpy(&syncMsg.m_syncData, result.c_str(), result.length());
+	syncMsg.m_size = result.length();
+
 }
 
 uint8_t NetworkObject::getUniqueID() {

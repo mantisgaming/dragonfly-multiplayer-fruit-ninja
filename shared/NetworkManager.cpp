@@ -71,26 +71,27 @@ namespace df {
 		}
 	}
 
-	void NetworkManager::sendToAll(char* data, int dataSize) {
+	void NetworkManager::sendToAll(NetworkMessage& message) {
 		for (int i = 0; i < m_connections.size(); i++) {
-			m_connections[i]->send(data, dataSize);
+			m_connections[i]->send(message);
 		}
 	}
 
 	void NetworkManager::recieve(NetworkSocket* sock) {
-		char* data = NULL;
+		NetworkMessage* message;
 
 		while (true) {
-			int dataSize = sock->receive(data);
+			message = new NetworkMessage();
+			int dataSize = sock->receive(*message);
 
 			if (dataSize > 0) {
-				EventNetwork e = EventNetwork(sock, EventNetwork::Label::DATA, data, (uint16_t)dataSize);
+				EventNetwork e = EventNetwork(sock, EventNetwork::Label::DATA, message);
 				WM.onEvent(&e);
-				delete[] data;
 			}
-			else {
-				if (data != NULL)
-					delete[] data;
+
+			delete message;
+
+			if (dataSize <= 0) {
 				return;
 			}
 		}

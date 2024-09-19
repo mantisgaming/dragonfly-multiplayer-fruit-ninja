@@ -2,6 +2,7 @@
 
 #include <WinSock2.h>
 #include <string>
+#include "NetworkMessage.h"
 
 namespace df {
 
@@ -24,8 +25,8 @@ namespace df {
 
 		int connect(ULONG address, u_short port);
 
-		int send(char* data, uint16_t dataSize);
-		int receive(char*& data);
+		int send(NetworkMessage& message);
+		int receive(NetworkMessage& message);
 
 		int close();
 	};

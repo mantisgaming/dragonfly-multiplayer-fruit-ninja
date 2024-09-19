@@ -35,7 +35,7 @@ namespace df {
 		inline bool isServer() { return m_listener != NULL; }
 
 		void accept();
-		void sendToAll(char* data, int dataSize);
+		void sendToAll(NetworkMessage& message);
 		void recieve();
 		int connect(std::string address, uint16_t port);
 

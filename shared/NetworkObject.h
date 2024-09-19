@@ -17,7 +17,8 @@ private:
 public:
 	NetworkObject(uint8_t networkID, uint8_t ticksPerSync = 0);
 	int eventHandler(const df::Event* p_e) override;
-	void synchronize();
+	void synchronize(unsigned int attr = 0);
+	inline uint8_t getNetworkID() { return m_networkID; };
 	static uint8_t getUniqueID();
 };
 

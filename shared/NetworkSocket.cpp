@@ -78,15 +78,18 @@ namespace df {
 		return 0;
 	}
 
-	int NetworkSocket::send(char* data, uint16_t dataSize) {
+	int NetworkSocket::send(NetworkMessage& message) {
 		REQUIRE_SOCKET;
 
 		std::stringstream stream;
 
-		stream.write(reinterpret_cast<char*>(&dataSize), sizeof(dataSize));
-		stream.write(data, dataSize);
+		uint16_t totalDataSize = sizeof(totalDataSize) + sizeof(message.type) + message.dataSize;
 
-		if (::send(m_sock, stream.str().c_str(), dataSize + sizeof(dataSize), 0) < 0) {
+		stream.write(reinterpret_cast<char*>(&totalDataSize), sizeof(totalDataSize));
+		stream.write(reinterpret_cast<char*>(&message.type), sizeof(message.type));
+		stream.write(message.data, message.dataSize);
+
+		if (::send(m_sock, stream.str().c_str(), totalDataSize, 0) < 0) {
 			switch (WSAGetLastError()) {
 			case WSAEWOULDBLOCK:
 				return 0;
@@ -99,7 +102,7 @@ namespace df {
 				close();
 				return -1;
 			default:
-				logNetworkError("accept() failed");
+				logNetworkError("send() failed");
 				return -1;
 			}
 		}
@@ -133,7 +136,7 @@ namespace df {
 		return responseSize;
 	}
 
-	int NetworkSocket::receive(char*& data)
+	int NetworkSocket::receive(NetworkMessage& message)
 	{
 		uint16_t dataSize;
 
@@ -155,9 +158,14 @@ namespace df {
 			return -1; // this should never happen
 		}
 
-		// copy buffer into pointer
-		data = new char[dataSize];
-		memcpy(data, buff + sizeof(dataSize), dataSize);
+		if (message.data != NULL)
+			delete[] message.data;
+
+		message.dataSize = dataSize - sizeof(message.dataSize) - sizeof(message.type);
+		message.type = *reinterpret_cast<NetworkMessage::Type*>(buff + sizeof(message.dataSize));
+
+		message.data = new char[message.dataSize];
+		memcpy(&message.data, buff + sizeof(message.dataSize) + sizeof(message.type), message.dataSize);
 		delete[] buff;
 
 		return dataSize;
