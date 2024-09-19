@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="EventNetwork.h" />
     <ClInclude Include="NetworkMessage.h" />
+    <ClInclude Include="Fruit.h" />
     <ClInclude Include="NetworkSentry.h" />
     <ClInclude Include="NetworkSocket.h" />
     <ClInclude Include="NetworkManager.h" />
@@ -21,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EventNetwork.cpp" />
+    <ClCompile Include="Fruit.cpp" />
     <ClCompile Include="NetworkSentry.cpp" />
     <ClCompile Include="NetworkSocket.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
