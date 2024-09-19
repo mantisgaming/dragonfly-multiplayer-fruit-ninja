@@ -22,6 +22,8 @@ namespace df {
 		NetworkManager(NetworkManager& other);
 		NetworkManager& operator=(NetworkManager& other);
 
+		void recieve(NetworkSocket* sock);
+
 	public:
 		inline static NetworkManager& getInstance() {
 			static NetworkManager nm;

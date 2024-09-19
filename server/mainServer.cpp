@@ -2,6 +2,7 @@
 #include <GameManager.h>
 #include <LogManager.h>
 #include <NetworkManager.h>
+#include <Util.h>
 
 int main(int argc, char** argv) {
     // Start up game manager.
@@ -18,8 +19,7 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    // Show splash screen.
-    df::splash();
+    Util::loadResources();
 
     // Shut everything down.
     GM.shutDown();

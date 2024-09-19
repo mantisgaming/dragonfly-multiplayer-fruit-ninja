@@ -77,18 +77,28 @@ namespace df {
 		}
 	}
 
-	void NetworkManager::recieve() {
-		for (int i = 0; i < m_connections.size(); i++) {
-			char* data = NULL;
-			int dataSize = m_connections[i]->receive(data);
+	void NetworkManager::recieve(NetworkSocket* sock) {
+		char* data = NULL;
+
+		while (true) {
+			int dataSize = sock->receive(data);
 
 			if (dataSize > 0) {
-				EventNetwork e = EventNetwork(m_connections[i], EventNetwork::Label::DATA, data, (uint16_t)dataSize);
+				EventNetwork e = EventNetwork(sock, EventNetwork::Label::DATA, data, (uint16_t)dataSize);
 				WM.onEvent(&e);
-			}
-
-			if (data != NULL)
 				delete[] data;
+			}
+			else {
+				if (data != NULL)
+					delete[] data;
+				return;
+			}
+		}
+	}
+
+	void NetworkManager::recieve() {
+		for (int i = 0; i < m_connections.size(); i++) {
+			recieve(m_connections[i]);
 		}
 	}
 
