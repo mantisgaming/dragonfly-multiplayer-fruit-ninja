@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventNetwork.h" />
+    <ClInclude Include="NetworkMessage.h" />
     <ClInclude Include="NetworkSentry.h" />
     <ClInclude Include="NetworkSocket.h" />
     <ClInclude Include="NetworkManager.h" />
