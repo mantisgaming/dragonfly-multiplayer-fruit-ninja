@@ -42,9 +42,6 @@
     <ClInclude Include="NetworkObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkMessageSync.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetworkManager.cpp">
@@ -69,9 +66,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NetworkObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkMessageSync.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NetworkMessage.cpp">

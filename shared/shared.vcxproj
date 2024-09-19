@@ -19,7 +19,6 @@
     <ClInclude Include="NetworkSocket.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="NetworkUtil.h" />
-    <ClInclude Include="NetworkMessageSync.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
@@ -31,7 +30,6 @@
     <ClCompile Include="NetworkSocket.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="NetworkUtil.cpp" />
-    <ClCompile Include="NetworkMessageSync.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
