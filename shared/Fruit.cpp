@@ -22,11 +22,16 @@ void Fruit::explode() {
 Fruit::Fruit(std::string& sprite) : NetworkObject(NetworkObject::getUniqueID(), 30){
 	setType(FRUIT_STRING);
 
-	if (!NM.isServer() && setSprite(sprite)) {
+	if (setSprite(sprite)) {
 		LM.writeLog("Failed to find sprite '%s'", sprite.c_str());
 	}
 
 	setSolidness(df::SOFT);
+}
+
+Fruit::Fruit() {
+    setType(FRUIT_STRING);
+
 }
 
 int Fruit::subEventHandler(const df::Event* p_e) {

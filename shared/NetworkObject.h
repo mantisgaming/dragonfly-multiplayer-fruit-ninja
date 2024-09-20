@@ -14,14 +14,16 @@ private:
 	int stepHandler(const df::EventStep* p_e);
 	static std::vector<uint8_t>* freeIDs;
 	int eventHandler(const df::Event* p_e) override;
+	void syncDestroy();
 
 public:
-	NetworkObject(uint8_t networkID, uint8_t ticksPerSync = 0);
+	NetworkObject(uint8_t networkID = 0, uint8_t ticksPerSync = 0);
 	~NetworkObject();
 	virtual int subEventHandler(const df::Event* p_e);
 	void synchronize(unsigned int attr = 0);
-	void syncDestroy();
 	constexpr uint8_t getNetworkID() const { return m_networkID; };
 	static uint8_t getUniqueID();
+	int serialize(std::stringstream* p_ss, unsigned int attr = 0) override;
+	int deserialize(std::stringstream* p_ss, unsigned int* p_a = NULL) override;
 };
 

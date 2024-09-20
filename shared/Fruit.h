@@ -25,6 +25,7 @@ private:
 	void explode();
 public:
 	Fruit(std::string& sprite);
+	Fruit();
 	int subEventHandler(const df::Event* p_e) override;
 	int out(const df::EventOut* p_e);
 	int collide(const df::EventCollision* p_e);

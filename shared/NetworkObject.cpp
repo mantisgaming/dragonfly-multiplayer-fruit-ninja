@@ -1,5 +1,6 @@
 #include "NetworkObject.h"
 #include "NetworkMessage.h"
+#include "NetworkManager.h"
 #include <sstream>
 #include <LogManager.h>
 
@@ -25,6 +26,8 @@ NetworkObject::NetworkObject(uint8_t networkID, uint8_t ticksPerSync) : m_networ
 
 NetworkObject::~NetworkObject() {
 	freeIDs->push_back(m_networkID);
+	if (m_ticksPerSync > 0)
+		syncDestroy();
 }
 
 int NetworkObject::subEventHandler(const df::Event* p_e)
@@ -42,8 +45,13 @@ int NetworkObject::eventHandler(const df::Event* p_e) {
 }
 
 void NetworkObject::synchronize(unsigned int attr) {
+	if (m_networkID == 0) {
+		LM.writeLog("NetworkObject::synchronize(): WARNING: Attempted to synchronize object with invalid network ID");
+		return;
+	}
+
 	NetworkMessage syncMsg;
-	syncMsg.type = NetworkMessage::Type::SYNC;
+	syncMsg.type = NetworkMessage::SYNC;
 
 	std::stringstream stream;
 	serialize(&stream, attr);
@@ -53,17 +61,25 @@ void NetworkObject::synchronize(unsigned int attr) {
 	syncMsg.dataSize = (uint16_t) result.length();
 	syncMsg.data = result.c_str();
 
+	NM.sendToAll(syncMsg);
 }
 
 void NetworkObject::syncDestroy() {
-	
+	NetworkMessage delMsg;
+	delMsg.type = NetworkMessage::DESTROY;
+	delMsg.data = new char(m_networkID);
+	delMsg.dataSize = 1;
+
+	NM.sendToAll(delMsg);
+
+	delete delMsg.data;
 }
 
 uint8_t NetworkObject::getUniqueID() {
 	
 	if (freeIDs == NULL) {
 		freeIDs = new std::vector<uint8_t>();
-		for (int i = UINT8_MAX; i >= 0; i--) {
+		for (int i = UINT8_MAX; i > 0; i--) {
 			freeIDs->push_back(i);
 		}
 	}
@@ -76,4 +92,14 @@ uint8_t NetworkObject::getUniqueID() {
 	freeIDs->pop_back();
 
 	return id;
+}
+
+int NetworkObject::serialize(std::stringstream* p_ss, unsigned int attr) {
+	int ok = Object::serialize(p_ss, attr);
+	return ok;
+}
+
+int NetworkObject::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
+	int ok = Object::deserialize(p_ss, p_a);
+	return ok;
 }
