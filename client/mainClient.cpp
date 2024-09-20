@@ -3,6 +3,7 @@
 #include <LogManager.h>
 #include <NetworkManager.h>
 #include <Util.h>
+#include "ConnectionField.h"
 
 int main(int argc, char** argv) {
     // Start up game manager.
@@ -20,6 +21,8 @@ int main(int argc, char** argv) {
     }
 
     Util::loadResources();
+
+    new ConnectionField();
 
     // Show splash screen.
     df::splash();

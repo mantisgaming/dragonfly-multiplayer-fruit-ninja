@@ -23,7 +23,5 @@ public:
 	void synchronize(unsigned int attr = 0);
 	constexpr uint8_t getNetworkID() const { return m_networkID; };
 	static uint8_t getUniqueID();
-	int serialize(std::stringstream* p_ss, unsigned int attr = 0) override;
-	int deserialize(std::stringstream* p_ss, unsigned int* p_a = NULL) override;
 };
 

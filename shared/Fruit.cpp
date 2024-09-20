@@ -7,22 +7,23 @@
 #include <EventView.h>
 
 #include "NetworkManager.h"
+#include "Sword.h"
 
 void Fruit::explode() {
-    CLIENT_ONLYV;
+    CLIENT_ONLY(
+        df::explode(getAnimation().getSprite(), getAnimation().getIndex(), getPosition(),
+            EXPLOSION_AGE, EXPLOSION_SPEED, EXPLOSION_ROTATE);
 
-    df::explode(getAnimation().getSprite(), getAnimation().getIndex(), getPosition(),
-        EXPLOSION_AGE, EXPLOSION_SPEED, EXPLOSION_ROTATE);
-
-    std::string sound = "splat-" + std::to_string(rand() % 6 + 1);
-    RM.getSound(sound)->play();
-    WM.markForDelete(this);
+        std::string sound = "splat-" + std::to_string(rand() % 6 + 1);
+        RM.getSound(sound)->play();
+        WM.markForDelete(this);
+    )
 }
 
 Fruit::Fruit(std::string& sprite) : NetworkObject(NetworkObject::getUniqueID(), 30){
 	setType(FRUIT_STRING);
 
-	if (setSprite(sprite)) {
+	if (setSprite(sprite) && NM.isClient()) {
 		LM.writeLog("Failed to find sprite '%s'", sprite.c_str());
 	}
 
@@ -45,28 +46,32 @@ int Fruit::subEventHandler(const df::Event* p_e) {
 }
 
 int Fruit::out(const df::EventOut* p_e) {
-    SERVER_ONLYR(0);
+    SERVER_ONLY(
+        if (!isExiting()) { return 1; }
 
-    if (!isExiting()) { return 1; }
+        // TODO trigger fruit miss event
 
-    // TODO trigger fruit miss event
+        WM.markForDelete(this);
+        return 1;
+    )
 
-    WM.markForDelete(this);
-    return 1;
+    return 0;
 }
 
 int Fruit::collide(const df::EventCollision* p_e) {
-    SERVER_ONLYR(0);
-    
-    if (p_e->getObject1()->getType() == SWORD_STRING) {
+    SERVER_ONLY(
+        if (p_e->getObject1()->getType() == SWORD_STRING) {
 
-        // TODO trigger fruit hit event
+            // TODO trigger fruit hit event
 
-        WM.markForDelete(this);
+            WM.markForDelete(this);
 
-        explode();
-    }
-    return 1;
+            explode();
+        }
+        return 1;
+    )
+
+    return 0;
 }
 
 // if the dot product between the direction of movement

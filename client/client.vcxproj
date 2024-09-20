@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConnectionField.cpp" />
     <ClCompile Include="mainClient.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -18,6 +19,9 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="df-font.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ConnectionField.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

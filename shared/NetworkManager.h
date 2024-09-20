@@ -9,10 +9,8 @@
 
 #define DEFAULT_PORT 9876
 
-#define SERVER_ONLYR(retCode) if (NM.isClient()) return retCode
-#define SERVER_ONLYV if (NM.isClient()) return
-#define CLIENT_ONLYR(retCode) if (NM.isServer()) return retCode
-#define CLIENT_ONLYV if (NM.isServer()) return
+#define SERVER_ONLY(code) if (NM.isServer()) {code}
+#define CLIENT_ONLY(code) if (NM.isClient()) {code}
 
 namespace df {
 

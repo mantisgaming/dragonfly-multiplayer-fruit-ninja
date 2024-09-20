@@ -93,13 +93,3 @@ uint8_t NetworkObject::getUniqueID() {
 
 	return id;
 }
-
-int NetworkObject::serialize(std::stringstream* p_ss, unsigned int attr) {
-	int ok = Object::serialize(p_ss, attr);
-	return ok;
-}
-
-int NetworkObject::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
-	int ok = Object::deserialize(p_ss, p_a);
-	return ok;
-}
