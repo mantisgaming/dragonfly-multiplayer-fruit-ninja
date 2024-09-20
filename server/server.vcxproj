@@ -11,8 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\**\*.cpp" />
-    <ClCompile Include="..\shared\src\**\*.cpp" />
+    <ClCompile Include="src\mainServer.cpp" />
+    <ClCompile Include="src\Server.cpp" />
+    <_SharedCompile Include="..\shared\src\**\*.cpp" />
+    <ClCompile Include="@(_SharedCompile)" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="df-config.txt" />
@@ -21,8 +23,14 @@
     <Font Include="df-font.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\**\*.h" />
-    <ClInclude Include="..\shared\src\**\*.h" />
+    <ClInclude Include="src\Server.h" />
+    <_SharedIncludes Include="..\shared\src\**\*.h" />
+    <ClInclude Include="@(_SharedIncludes)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\shared\shared.vcxproj">
+      <Project>{a2010e8d-5ba4-42d9-8b10-f8b1b3e13955}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -62,20 +70,20 @@
     <LibraryPath>$(solutiondir)libraries\SFML-2.6.1\lib;$(solutiondir)libraries\Dragonfly\lib;$(IncludePath);$(LibraryPath)</LibraryPath>
     <TargetName>fruit-ninja-server</TargetName>
     <OutDir>$(SolutionDir)$(Platform)-Build\$(Configuration)\$(targetname)\</OutDir>
-    <SourcePath>$(solutiondir)shared;$(SourcePath)</SourcePath>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(solutiondir)libraries\SFML-2.6.1\include;$(solutiondir)libraries\Dragonfly\include;$(solutiondir)shared\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(solutiondir)libraries\SFML-2.6.1\lib;$(solutiondir)libraries\Dragonfly\lib;$(IncludePath);$(LibraryPath)</LibraryPath>
     <TargetName>fruit-ninja-server</TargetName>
     <OutDir>$(SolutionDir)$(Platform)-Build\$(Configuration)\$(targetname)\</OutDir>
-    <SourcePath>$(solutiondir)shared;$(SourcePath)</SourcePath>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;NO_NETWORK;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SERVER;NOMINMAX;NO_NETWORK;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -100,7 +108,7 @@ xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\openal32.dll" "$(outdir)" /Y</Comm
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;NO_NETWORK;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SERVER;NOMINMAX;NO_NETWORK;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>

@@ -9,9 +9,6 @@
 
 #define DEFAULT_PORT 9876
 
-#define SERVER_ONLY(code) if (NM.isServer()) {code}
-#define CLIENT_ONLY(code) if (NM.isClient()) {code}
-
 namespace df {
 
 	class NetworkManager {

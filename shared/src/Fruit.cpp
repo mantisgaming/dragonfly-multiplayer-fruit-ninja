@@ -10,14 +10,14 @@
 #include "Sword.h"
 
 void Fruit::explode() {
-    CLIENT_ONLY(
+    #ifdef CLIENT
         df::explode(getAnimation().getSprite(), getAnimation().getIndex(), getPosition(),
             EXPLOSION_AGE, EXPLOSION_SPEED, EXPLOSION_ROTATE);
 
         std::string sound = "splat-" + std::to_string(rand() % 6 + 1);
         RM.getSound(sound)->play();
         WM.markForDelete(this);
-    )
+    #endif
 }
 
 Fruit::Fruit(std::string& sprite) : NetworkObject(NetworkObject::getUniqueID(), 30){
@@ -46,20 +46,20 @@ int Fruit::subEventHandler(const df::Event* p_e) {
 }
 
 int Fruit::out(const df::EventOut* p_e) {
-    SERVER_ONLY(
+    #ifdef SERVER
         if (!isExiting()) { return 1; }
 
         // TODO trigger fruit miss event
 
         WM.markForDelete(this);
         return 1;
-    )
+    #endif
 
     return 0;
 }
 
 int Fruit::collide(const df::EventCollision* p_e) {
-    SERVER_ONLY(
+    #ifdef SERVER
         if (p_e->getObject1()->getType() == SWORD_STRING) {
 
             // TODO trigger fruit hit event
@@ -69,7 +69,7 @@ int Fruit::collide(const df::EventCollision* p_e) {
             explode();
         }
         return 1;
-    )
+    #endif
 
     return 0;
 }

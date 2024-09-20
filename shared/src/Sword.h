@@ -17,8 +17,6 @@ private:
 	int m_mana;
 
 	int stepEvent();
-	int clientStep();
-	int serverStep();
 public:
 	Sword(df::Color color = df::Color::RED);
 	int subEventHandler(const df::Event* p_e) override;

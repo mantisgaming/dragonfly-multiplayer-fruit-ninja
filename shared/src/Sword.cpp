@@ -3,23 +3,7 @@
 #include "NetworkManager.h"
 
 int Sword::stepEvent() {
-	CLIENT_ONLY (return clientStep();)
-	SERVER_ONLY (return serverStep();)
 	return 0;
-}
-
-int Sword::clientStep() {
-
-	// TODO draw particles and send mouse data
-
-	return 1;
-}
-
-int Sword::serverStep() {
-
-	// TODO process sword movement
-
-	return 1;
 }
 
 Sword::Sword(df::Color color) {
