@@ -2,7 +2,7 @@
 #include <GameManager.h>
 #include <LogManager.h>
 #include <NetworkManager.h>
-#include <Util.h>
+#include "Server.h"
 
 int main(int argc, char** argv) {
     // Start up game manager.
@@ -12,6 +12,7 @@ int main(int argc, char** argv) {
         return 0;
     }
 
+    // Start up network manager
     if (NM.startUp()) {
         LM.writeLog("Error starting network manager!");
         NM.shutDown();
@@ -19,8 +20,24 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    Util::loadResources();
+    // load the default port
+    uint16_t port = DEFAULT_PORT;
 
-    // Shut everything down.
+    // check for a port in the command line arguments
+    if (argc > 1) {
+        port = atoi(argv[1]);
+    }
+
+    // set the network manager to server mode
+    NM.startupServer(port);
+
+    // create server
+    new Server();
+
+    // run server
+    GM.run();
+
+    // shutdown everything
+    NM.shutDown();
     GM.shutDown();
 }

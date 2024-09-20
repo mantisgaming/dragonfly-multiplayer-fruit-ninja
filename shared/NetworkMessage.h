@@ -6,14 +6,14 @@ struct NetworkMessage
 {
 public:
 	enum Type : uint8_t {
-		UNDEFINED = -1
+		UNDEFINED = 0xffui8,
+		SYNC = 0,
 	};
 
 	Type type;
-	char* data;
+	const char* data;
 	uint16_t dataSize;
 
-	NetworkMessage();
 	~NetworkMessage();
 };
 

@@ -11,7 +11,7 @@ int NetworkObject::stepHandler(const df::EventStep* p_e) {
 		synchronize();
 	}
 
-	m_counter --;
+	m_counter--;
 	return 1;
 }
 
@@ -23,39 +23,57 @@ NetworkObject::NetworkObject(uint8_t networkID, uint8_t ticksPerSync) : m_networ
 	synchronize();
 }
 
-int NetworkObject::eventHandler(const df::Event* p_e) {
+NetworkObject::~NetworkObject() {
+	freeIDs->push_back(m_networkID);
+}
+
+int NetworkObject::subEventHandler(const df::Event* p_e)
+{
 	return 0;
+}
+
+int NetworkObject::eventHandler(const df::Event* p_e) {
+	int used = subEventHandler(p_e);
+
+	if (p_e->getType() == df::STEP_EVENT)
+		used |= stepHandler((df::EventStep*)p_e);
+
+	return used;
 }
 
 void NetworkObject::synchronize(unsigned int attr) {
 	NetworkMessage syncMsg;
-	syncMsg.m_type
+	syncMsg.type = NetworkMessage::Type::SYNC;
 
 	std::stringstream stream;
 	serialize(&stream, attr);
 	
 	std::string result = stream.rdbuf()->str();
 
-	if (result.length() > sizeof(syncMsg.m_syncData)) {
-		LM.writeLog("Attemtped to synchronize object with too much data");
-		return;
-	}
+	syncMsg.dataSize = (uint16_t) result.length();
+	syncMsg.data = result.c_str();
 
-	memcpy(&syncMsg.m_syncData, result.c_str(), result.length());
-	syncMsg.m_size = result.length();
+}
 
+void NetworkObject::syncDestroy() {
+	
 }
 
 uint8_t NetworkObject::getUniqueID() {
 	
 	if (freeIDs == NULL) {
 		freeIDs = new std::vector<uint8_t>();
-		for (int i = 0; i <= UINT8_MAX; i++) {
+		for (int i = UINT8_MAX; i >= 0; i--) {
 			freeIDs->push_back(i);
 		}
 	}
+
 	if (freeIDs->size() == 0)
 		return 0xffui8;
+
+	uint8_t id = (*freeIDs)[freeIDs->size()];
 	
-	return (*freeIDs)[0];
+	freeIDs->pop_back();
+
+	return id;
 }

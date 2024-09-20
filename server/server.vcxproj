@@ -12,12 +12,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainServer.cpp" />
+    <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="df-config.txt" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="df-font.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Server.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -4,4 +4,4 @@
 #include <stdint.h>
 
 void logNetworkError(const char* message);
-int getAddress(std::string hostname, uint64_t* address);
+int getAddress(std::string hostname, uint32_t* address);

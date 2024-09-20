@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Object.h>
+#include "NetworkObject.h"
 #include <EventOut.h>
 #include <EventCollision.h>
 
@@ -20,15 +20,15 @@ const int EXPLOSION_AGE = 45;        // in ticks
 const float EXPLOSION_SPEED = 0.05f; // in spaces/tick
 const float EXPLOSION_ROTATE = 1.0f; // in degrees
 
-class Fruit : df::Object {
+class Fruit : public NetworkObject {
 private:
 	void explode();
 public:
 	Fruit(std::string& sprite);
-	int eventHandler(const df::Event* p_e) override;
+	int subEventHandler(const df::Event* p_e) override;
 	int out(const df::EventOut* p_e);
 	int collide(const df::EventCollision* p_e);
-	bool isExiting();
+	bool isExiting() const;
 	void start(float speed);
 };
 

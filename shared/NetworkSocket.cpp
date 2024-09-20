@@ -87,7 +87,9 @@ namespace df {
 
 		stream.write(reinterpret_cast<char*>(&totalDataSize), sizeof(totalDataSize));
 		stream.write(reinterpret_cast<char*>(&message.type), sizeof(message.type));
-		stream.write(message.data, message.dataSize);
+
+		if (message.dataSize > 0)
+			stream.write(message.data, message.dataSize);
 
 		if (::send(m_sock, stream.str().c_str(), totalDataSize, 0) < 0) {
 			switch (WSAGetLastError()) {
@@ -163,9 +165,13 @@ namespace df {
 
 		message.dataSize = dataSize - sizeof(message.dataSize) - sizeof(message.type);
 		message.type = *reinterpret_cast<NetworkMessage::Type*>(buff + sizeof(message.dataSize));
+		message.data = NULL;
 
-		message.data = new char[message.dataSize];
-		memcpy(&message.data, buff + sizeof(message.dataSize) + sizeof(message.type), message.dataSize);
+		if (message.dataSize > 0) {
+			message.data = new char[message.dataSize];
+			memcpy(&message.data, buff + sizeof(message.dataSize) + sizeof(message.type), message.dataSize);
+		}
+
 		delete[] buff;
 
 		return dataSize;

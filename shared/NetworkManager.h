@@ -9,6 +9,11 @@
 
 #define DEFAULT_PORT 9876
 
+#define SERVER_ONLYR(retCode) if (NM.isClient()) return retCode
+#define SERVER_ONLYV if (NM.isClient()) return
+#define CLIENT_ONLYR(retCode) if (NM.isServer()) return retCode
+#define CLIENT_ONLYV if (NM.isServer()) return
+
 namespace df {
 
 	class NetworkManager {
@@ -32,7 +37,8 @@ namespace df {
 
 		int startupServer(uint16_t port);
 		int shutdownServer();
-		inline bool isServer() { return m_listener != NULL; }
+		constexpr bool isServer() const { return m_listener != NULL; }
+		constexpr bool isClient() const { return m_listener == NULL; }
 
 		void accept();
 		void sendToAll(NetworkMessage& message);

@@ -9,7 +9,7 @@
 #include "NetworkManager.h"
 
 void Fruit::explode() {
-    if (NM.isServer()) return;
+    CLIENT_ONLYV;
 
     df::explode(getAnimation().getSprite(), getAnimation().getIndex(), getPosition(),
         EXPLOSION_AGE, EXPLOSION_SPEED, EXPLOSION_ROTATE);
@@ -19,7 +19,7 @@ void Fruit::explode() {
     WM.markForDelete(this);
 }
 
-Fruit::Fruit(std::string& sprite) {
+Fruit::Fruit(std::string& sprite) : NetworkObject(NetworkObject::getUniqueID(), 30){
 	setType(FRUIT_STRING);
 
 	if (!NM.isServer() && setSprite(sprite)) {
@@ -29,8 +29,7 @@ Fruit::Fruit(std::string& sprite) {
 	setSolidness(df::SOFT);
 }
 
-int Fruit::eventHandler(const df::Event* p_e) {
-
+int Fruit::subEventHandler(const df::Event* p_e) {
     if (p_e->getType() == df::OUT_EVENT)
         return out((df::EventOut*)p_e);
 
@@ -41,6 +40,8 @@ int Fruit::eventHandler(const df::Event* p_e) {
 }
 
 int Fruit::out(const df::EventOut* p_e) {
+    SERVER_ONLYR(0);
+
     if (!isExiting()) { return 1; }
 
     // TODO trigger fruit miss event
@@ -50,7 +51,7 @@ int Fruit::out(const df::EventOut* p_e) {
 }
 
 int Fruit::collide(const df::EventCollision* p_e) {
-    if (!NM.isServer()) return;
+    SERVER_ONLYR(0);
     
     if (p_e->getObject1()->getType() == SWORD_STRING) {
 
@@ -66,7 +67,7 @@ int Fruit::collide(const df::EventCollision* p_e) {
 // if the dot product between the direction of movement
 // and the position relative to the center of the screen
 // is negative, then it is exiting
-bool Fruit::isExiting() {
+bool Fruit::isExiting() const {
     int world_x = (int)WM.getBoundary().getHorizontal();
     int world_y = (int)WM.getBoundary().getVertical();
     df::Vector world_center(world_x / 2.0f, world_y / 2.0f);
@@ -80,7 +81,6 @@ bool Fruit::isExiting() {
 }
 
 void Fruit::start(float speed) {
-
     df::Vector begin, end;
 
     // Get world boundaries.
@@ -120,5 +120,5 @@ void Fruit::start(float speed) {
     // Move Object into position.
     WM.moveObject(this, begin);
 
-    // TODO synchronize state
+    synchronize();
 }

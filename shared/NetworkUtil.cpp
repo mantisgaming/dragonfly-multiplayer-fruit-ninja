@@ -26,7 +26,7 @@ void logNetworkError(const char* message) {
 }
 
 // query DNS for address
-int getAddress(std::string hostname, uint64_t* address) {
+int getAddress(std::string hostname, uint32_t* address) {
 	ADDRINFOA hints;
 	PADDRINFOA result;
 

@@ -105,7 +105,7 @@ namespace df {
 
 	int NetworkManager::connect(std::string address, uint16_t port)
 	{
-		uint64_t ip;
+		uint32_t ip;
 		if (getAddress(address, &ip)) {
 			return -1;
 		}

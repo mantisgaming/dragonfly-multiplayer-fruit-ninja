@@ -11,8 +11,8 @@ namespace df {
 	{
 	public:
 		enum Label : uint8_t {
-			UNDEFINED = -1,
-			ACCEPT,
+			UNDEFINED = 0xffui8,
+			ACCEPT = 0,
 			CONNECT,
 			CLOSE,
 			DATA,
@@ -24,11 +24,11 @@ namespace df {
 		NetworkMessage* m_message;
 
 	public:
-		EventNetwork(NetworkSocket* socket = NULL, Label label = UNDEFINED, NetworkMessage* message);
+		EventNetwork(NetworkSocket* socket = NULL, Label label = UNDEFINED, NetworkMessage* message = NULL);
 
-		inline Label getLabel() { return m_label; };
-		inline NetworkSocket* getSocket() { return m_socket; };
-		inline const NetworkMessage* getMessage() { return m_message; };
+		inline Label getLabel() const { return m_label; };
+		inline NetworkSocket* getSocket() const { return m_socket; };
+		inline const NetworkMessage* getMessage() const { return m_message; };
 	};
 
 }
