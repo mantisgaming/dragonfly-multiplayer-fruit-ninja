@@ -11,10 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\mainServer.cpp" />
-    <ClCompile Include="src\Server.cpp" />
-    <_SharedCompile Include="..\shared\src\**\*.cpp" />
-    <ClCompile Include="@(_SharedCompile)" />
+    <ClCompile Include="..\shared\EventNetwork.cpp" />
+    <ClCompile Include="..\shared\Fruit.cpp" />
+    <ClCompile Include="..\shared\NetworkManager.cpp" />
+    <ClCompile Include="..\shared\NetworkObject.cpp" />
+    <ClCompile Include="..\shared\NetworkSentry.cpp" />
+    <ClCompile Include="..\shared\NetworkSocket.cpp" />
+    <ClCompile Include="..\shared\NetworkUtil.cpp" />
+    <ClCompile Include="..\shared\Sword.cpp" />
+    <ClCompile Include="..\shared\Util.cpp" />
+    <ClCompile Include="mainServer.cpp" />
+    <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="df-config.txt" />
@@ -23,9 +30,7 @@
     <Font Include="df-font.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Server.h" />
-    <_SharedIncludes Include="..\shared\src\**\*.h" />
-    <ClInclude Include="@(_SharedIncludes)" />
+    <ClInclude Include="Server.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\shared\shared.vcxproj">
@@ -66,14 +71,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(solutiondir)libraries\SFML-2.6.1\include;$(solutiondir)libraries\Dragonfly\include;$(solutiondir)shared\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(solutiondir)libraries\SFML-2.6.1\include;$(solutiondir)libraries\Dragonfly\include;$(solutiondir)shared;$(IncludePath)</IncludePath>
     <LibraryPath>$(solutiondir)libraries\SFML-2.6.1\lib;$(solutiondir)libraries\Dragonfly\lib;$(IncludePath);$(LibraryPath)</LibraryPath>
     <TargetName>fruit-ninja-server</TargetName>
     <OutDir>$(SolutionDir)$(Platform)-Build\$(Configuration)\$(targetname)\</OutDir>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(solutiondir)libraries\SFML-2.6.1\include;$(solutiondir)libraries\Dragonfly\include;$(solutiondir)shared\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(solutiondir)libraries\SFML-2.6.1\include;$(solutiondir)libraries\Dragonfly\include;$(solutiondir)shared;$(IncludePath)</IncludePath>
     <LibraryPath>$(solutiondir)libraries\SFML-2.6.1\lib;$(solutiondir)libraries\Dragonfly\lib;$(IncludePath);$(LibraryPath)</LibraryPath>
     <TargetName>fruit-ninja-server</TargetName>
     <OutDir>$(SolutionDir)$(Platform)-Build\$(Configuration)\$(targetname)\</OutDir>
