@@ -11,27 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EventNetwork.h" />
-    <ClInclude Include="NetworkMessage.h" />
-    <ClInclude Include="Fruit.h" />
-    <ClInclude Include="NetworkObject.h" />
-    <ClInclude Include="NetworkSentry.h" />
-    <ClInclude Include="NetworkSocket.h" />
-    <ClInclude Include="NetworkManager.h" />
-    <ClInclude Include="NetworkUtil.h" />
-    <ClInclude Include="Sword.h" />
-    <ClInclude Include="Util.h" />
+    <ClInclude Include="src\**\*.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EventNetwork.cpp" />
-    <ClCompile Include="Fruit.cpp" />
-    <ClCompile Include="NetworkObject.cpp" />
-    <ClCompile Include="NetworkSentry.cpp" />
-    <ClCompile Include="NetworkSocket.cpp" />
-    <ClCompile Include="NetworkManager.cpp" />
-    <ClCompile Include="NetworkUtil.cpp" />
-    <ClCompile Include="Sword.cpp" />
-    <ClCompile Include="Util.cpp" />
+    <ClCompile Include="src\EventNetwork.cpp" />
+    <ClCompile Include="src\Fruit.cpp" />
+    <ClCompile Include="src\NetworkManager.cpp" />
+    <ClCompile Include="src\NetworkObject.cpp" />
+    <ClCompile Include="src\NetworkSentry.cpp" />
+    <ClCompile Include="src\NetworkSocket.cpp" />
+    <ClCompile Include="src\NetworkUtil.cpp" />
+    <ClCompile Include="src\Sword.cpp" />
+    <ClCompile Include="src\Util.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -42,13 +33,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -98,8 +89,8 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(outdir)*.lib" "$(projectdir)build\lib" /I /Y
-xcopy "$(projectdir)*.h" "$(projectdir)build\include" /I /Y</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -124,8 +115,8 @@ xcopy "$(projectdir)*.h" "$(projectdir)build\include" /I /Y</Command>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(outdir)*.lib" "$(projectdir)build\lib" /I /Y
-xcopy "$(projectdir)*.h" "$(projectdir)build\include" /I /Y</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

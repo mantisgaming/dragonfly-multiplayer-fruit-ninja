@@ -6,7 +6,7 @@ const std::string SPRITE_PATH = ".\\sprites";
 const std::string SOUND_PATH = ".\\sounds";
 const std::string MUSIC_PATH = ".\\music";
 
-static class Util
+class Util
 {
 private:
 	static void loadSprites();
