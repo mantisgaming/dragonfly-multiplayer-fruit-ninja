@@ -6,6 +6,11 @@
 #include "ConnectionField.h"
 
 int main(int argc, char** argv) {
+
+#ifdef _DEBUG
+    LM.setFlush(true);
+#endif
+
     // Start up game manager.
     if (GM.startUp()) {
         LM.writeLog("Error starting game manager!");
@@ -22,10 +27,12 @@ int main(int argc, char** argv) {
 
     Util::loadResources();
 
-    new ConnectionField();
-
     // Show splash screen.
     df::splash();
+
+    new ConnectionField();
+    
+    GM.run();
 
     // Shut everything down.
     GM.shutDown();

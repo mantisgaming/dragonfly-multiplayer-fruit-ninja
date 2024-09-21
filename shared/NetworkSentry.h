@@ -5,7 +5,7 @@
 
 namespace df {
 
-	class NetworkSentry : Object
+	class NetworkSentry : public Object
 	{
 	private:
 		int stepHandler(const EventStep* p_event);

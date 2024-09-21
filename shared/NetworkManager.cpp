@@ -16,6 +16,7 @@ namespace df {
 
 	NetworkManager::NetworkManager() {
 		m_listener = NULL;
+		m_sentry = NULL;
 		m_connections.clear();
 	}
 	
@@ -27,6 +28,12 @@ namespace df {
 		if (isServer()) return 0;
 
 		m_listener = new NetworkSocket();
+
+		if (m_listener->create()) {
+			delete m_listener;
+			m_listener = NULL;
+			return -1;
+		}
 
 		if (m_listener->bind(port)) {
 			delete m_listener;
@@ -188,6 +195,8 @@ namespace df {
 			return -1;
 		}
 
+		m_sentry = new NetworkSentry();
+
 		return 0;
 	}
 
@@ -198,6 +207,7 @@ namespace df {
 			logNetworkError("WSACleanup() failed");
 		}
 
+		WM.markForDelete(m_sentry);
 	}
 
 }

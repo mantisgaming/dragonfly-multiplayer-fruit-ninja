@@ -5,19 +5,24 @@
 #include "Server.h"
 
 int main(int argc, char** argv) {
+
+#ifdef _DEBUG
+    LM.setFlush(true);
+#endif
+
     // Start up game manager.
     if (GM.startUp()) {
-        LM.writeLog("Error starting game manager!");
+        LM.writeLog("ERROR: failed to start game manager!");
         GM.shutDown();
-        return 0;
+        return 1;
     }
 
     // Start up network manager
     if (NM.startUp()) {
-        LM.writeLog("Error starting network manager!");
+        LM.writeLog("ERROR: failed to start network manager!");
         NM.shutDown();
         GM.shutDown();
-        return 0;
+        return 2;
     }
 
     // load the default port
@@ -29,7 +34,14 @@ int main(int argc, char** argv) {
     }
 
     // set the network manager to server mode
-    NM.startupServer(port);
+    if (NM.startupServer(port)) {
+        LM.writeLog("ERROR: Failed to start server");
+        NM.shutDown();
+        GM.shutDown();
+        return 3;
+    }
+
+    LM.writeLog("INFO: Server started successfully on port %hu", port);
 
     // create server
     new Server();

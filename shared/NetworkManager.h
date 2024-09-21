@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "NetworkSocket.h"
+#include "NetworkSentry.h"
 
 #define NM df::NetworkManager::getInstance()
 
@@ -17,6 +18,7 @@ namespace df {
 		NetworkSocket* m_listener;
 		std::vector<NetworkSocket*> m_connections;
 		static inline NetworkManager* instance = NULL;
+		NetworkSentry* m_sentry;
 
 		NetworkManager();
 		NetworkManager(NetworkManager& other);

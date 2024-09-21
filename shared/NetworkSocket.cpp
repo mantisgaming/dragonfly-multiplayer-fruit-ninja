@@ -8,14 +8,14 @@
 #include "WorldManager.h"
 
 // guard clause macros
-#define REQUIRE_SOCKET		\
-	if (m_sock < 0) {		\
-		return -1;			\
+#define REQUIRE_SOCKET				\
+	if (m_sock == UINT64_MAX) {		\
+		return -1;					\
 	}
 
-#define REQUIRE_NO_SOCKET	\
-	if (m_sock >= 0) {		\
-		return -1;			\
+#define REQUIRE_NO_SOCKET			\
+	if (m_sock != UINT64_MAX) {		\
+		return -1;					\
 	}
 
 namespace df {
@@ -65,8 +65,8 @@ namespace df {
 		memset(&info, 0, sizeof(info));
 
 		info.sin_family = AF_INET;
-		info.sin_addr.S_un.S_addr = address;
-		info.sin_port = port;
+		info.sin_addr.S_un.S_addr = htonl(address);
+		info.sin_port = htons(port);
 
 		if (::connect(m_sock, (sockaddr*)&info, sizeof(info))) {
 			logNetworkError("connect() failed");
@@ -140,14 +140,14 @@ namespace df {
 
 	int NetworkSocket::receive(NetworkMessage& message)
 	{
-		uint16_t dataSize;
+		uint16_t totalSize;
 
 		// check for full data header
-		if (receive(reinterpret_cast<char*>(&dataSize), sizeof(dataSize), true) < sizeof(dataSize)) {
+		if (receive(reinterpret_cast<char*>(&totalSize), sizeof(totalSize), true) < sizeof(totalSize)) {
 			return 0;
 		}
 
-		int totalSize = dataSize + sizeof(dataSize);
+		int dataSize = totalSize - sizeof(totalSize) - sizeof(message.type);
 		char* buff = new char[totalSize];
 
 		// check to make sure all data was received
@@ -163,13 +163,13 @@ namespace df {
 		if (message.data != NULL)
 			delete[] message.data;
 
-		message.dataSize = dataSize - sizeof(message.dataSize) - sizeof(message.type);
+		message.dataSize = dataSize;
 		message.type = *reinterpret_cast<NetworkMessage::Type*>(buff + sizeof(message.dataSize));
 		message.data = NULL;
 
 		if (message.dataSize > 0) {
 			message.data = new char[message.dataSize];
-			memcpy(&message.data, buff + sizeof(message.dataSize) + sizeof(message.type), message.dataSize);
+			memcpy((void*)message.data, buff + sizeof(message.dataSize) + sizeof(message.type), message.dataSize);
 		}
 
 		delete[] buff;
@@ -214,6 +214,8 @@ namespace df {
 			logNetworkError("listen() failed");
 			return -1;
 		}
+
+		setNonBlocking();
 
 		return 0;
 	}

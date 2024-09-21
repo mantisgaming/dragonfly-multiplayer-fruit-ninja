@@ -42,7 +42,7 @@ int getAddress(std::string hostname, uint32_t* address) {
 		return -1;
 	}
 
-	*address = ((sockaddr_in*)result)->sin_addr.S_un.S_addr;
+	*address = htonl(((sockaddr_in*)result->ai_addr)->sin_addr.S_un.S_addr);
 
 	return 0;
 }

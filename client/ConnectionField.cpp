@@ -3,6 +3,7 @@
 #include <LogManager.h>
 #include <NetworkManager.h>
 #include <WorldManager.h>
+#include <GameManager.h>
 
 ConnectionField::ConnectionField() {
 	setType(CONNECTION_FIELD_STRING);
@@ -24,5 +25,7 @@ void ConnectionField::callback() {
     }
     else {
         WM.markForDelete(this);
+
+        // Create waiting screen
     }
 }
