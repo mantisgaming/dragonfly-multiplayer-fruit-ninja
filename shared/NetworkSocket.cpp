@@ -23,7 +23,7 @@ namespace df {
 	int NetworkSocket::setNonBlocking() {
 		u_long arg = 1;
 		if (ioctlsocket(m_sock, FIONBIO, &arg)) {
-			logNetworkError("ioctlsocket() FIONBIO Failed");
+			logNetworkError("WARNING: ioctlsocket() FIONBIO Failed");
 			return -1;
 		}
 		return 0;
@@ -50,7 +50,7 @@ namespace df {
 		m_sock = ::socket(AF_INET, SOCK_STREAM, 0);
 
 		if (m_sock < 0) {
-			logNetworkError("socket() failed");
+			logNetworkError("WARNING: socket() failed");
 			m_sock = -1;
 			return -1;
 		}
@@ -69,7 +69,7 @@ namespace df {
 		info.sin_port = htons(port);
 
 		if (::connect(m_sock, (sockaddr*)&info, sizeof(info))) {
-			logNetworkError("connect() failed");
+			logNetworkError("WARNING: connect() failed");
 			return -1;
 		}
 
@@ -96,7 +96,7 @@ namespace df {
 			case WSAEWOULDBLOCK:
 				return 0;
 			case WSAECONNRESET:
-				LM.writeLog("A connection was reset");
+				LM.writeLog("INFO: A connection was reset");
 				{
 					EventNetwork e = EventNetwork(this, EventNetwork::Label::CLOSE);
 					WM.onEvent(&e);
@@ -104,7 +104,7 @@ namespace df {
 				close();
 				return -1;
 			default:
-				logNetworkError("send() failed");
+				logNetworkError("WARNING: send() failed");
 				return -1;
 			}
 		}
@@ -122,7 +122,7 @@ namespace df {
 			case WSAEWOULDBLOCK:
 				return 0;
 			case WSAECONNRESET:
-				LM.writeLog("A connection was reset");
+				LM.writeLog("INFO: A connection was reset");
 				{
 					EventNetwork e = EventNetwork(this, EventNetwork::Label::CLOSE);
 					WM.onEvent(&e);
@@ -130,7 +130,7 @@ namespace df {
 				close();
 				return -1;
 			default:
-				logNetworkError("recv() failed");
+				logNetworkError("WARNING: recv() failed");
 				return -1;
 			}
 		}
@@ -181,7 +181,7 @@ namespace df {
 		REQUIRE_SOCKET;
 
 		if (closesocket(m_sock)) {
-			logNetworkError("closesocket() failed");
+			logNetworkError("WARNING: closesocket() failed");
 			return -1;
 		}
 
@@ -200,7 +200,7 @@ namespace df {
 		info.sin_port = htons(port);
 
 		if (::bind(m_sock, (sockaddr*)&info, sizeof(info)) < 0) {
-			logNetworkError("bind() failed");
+			logNetworkError("WARNING: bind() failed");
 			return -1;
 		}
 
@@ -211,7 +211,7 @@ namespace df {
 		REQUIRE_SOCKET;
 
 		if (::listen(m_sock, 5) == -1) {
-			logNetworkError("listen() failed");
+			logNetworkError("WARNING: listen() failed");
 			return -1;
 		}
 
@@ -235,7 +235,7 @@ namespace df {
 			case WSAEWOULDBLOCK:
 				return 0;
 			default:
-				logNetworkError("accept() failed");
+				logNetworkError("WARNING: accept() failed");
 				return -1;
 			}
 		}

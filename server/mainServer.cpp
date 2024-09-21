@@ -4,7 +4,11 @@
 #include <NetworkManager.h>
 #include "Server.h"
 
+BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType);
+
 int main(int argc, char** argv) {
+
+    SetConsoleCtrlHandler(HandlerRoutine, true);
 
 #ifdef _DEBUG
     LM.setFlush(true);
@@ -51,5 +55,13 @@ int main(int argc, char** argv) {
 
     // shutdown everything
     NM.shutDown();
+
+    LM.writeLog("INFO: Server closed");
+
     GM.shutDown();
+}
+
+BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType) {
+    GM.setGameOver(true);
+    return true;
 }

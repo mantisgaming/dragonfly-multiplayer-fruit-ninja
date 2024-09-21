@@ -4,6 +4,7 @@
 #include <NetworkManager.h>
 
 int Server::dataHandler(const df::EventNetwork* p_e) {
+    LM.writeLog("INFO: Data received");
     const NetworkMessage& message = *(p_e->getMessage());
     switch (message.type) {
 
@@ -18,11 +19,13 @@ int Server::dataHandler(const df::EventNetwork* p_e) {
 
 int Server::acceptHandler(const df::EventNetwork* p_e)
 {
+    LM.writeLog("INFO: Accepted connection");
     return 0;
 }
 
 int Server::closeHandler(const df::EventNetwork* p_e)
 {
+    LM.writeLog("INFO: Connection closed");
     return 0;
 }
 

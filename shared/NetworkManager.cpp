@@ -191,7 +191,7 @@ namespace df {
 		// initialize WSA
 		WSADATA wsa;
 		if (WSAStartup(MAKEWORD(2, 2), &wsa) != NO_ERROR) {
-			logNetworkError("WSAStartup() failed");
+			logNetworkError("ERROR: WSAStartup() failed");
 			return -1;
 		}
 
@@ -204,7 +204,7 @@ namespace df {
 
 		// shutdown WSA
 		if (WSACleanup() != NO_ERROR) {
-			logNetworkError("WSACleanup() failed");
+			logNetworkError("WARNING: WSACleanup() failed");
 		}
 
 		WM.markForDelete(m_sentry);

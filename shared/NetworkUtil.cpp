@@ -38,7 +38,7 @@ int getAddress(std::string hostname, uint32_t* address) {
 
 	// query DNS for an IPv4 address
 	if (getaddrinfo(hostname.c_str(), NULL, &hints, &result)) {
-		logNetworkError("getaddrinfo() failed");
+		logNetworkError("WARNING: getaddrinfo() failed");
 		return -1;
 	}
 

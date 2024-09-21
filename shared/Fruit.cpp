@@ -24,7 +24,7 @@ Fruit::Fruit(std::string& sprite) : NetworkObject(NetworkObject::getUniqueID(), 
 	setType(FRUIT_STRING);
 
 	if (setSprite(sprite) && NM.isClient()) {
-		LM.writeLog("Failed to find sprite '%s'", sprite.c_str());
+		LM.writeLog("WARNING: Failed to find sprite '%s'", sprite.c_str());
 	}
 
 	setSolidness(df::SOFT);
