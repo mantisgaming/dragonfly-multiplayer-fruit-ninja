@@ -3,6 +3,8 @@
 #include <LogManager.h>
 #include <NetworkManager.h>
 #include "Server.h"
+#include "Grocer.h"
+#include <Util.h>
 
 BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType);
 
@@ -45,10 +47,13 @@ int main(int argc, char** argv) {
         return 3;
     }
 
+    Util::loadResources();
+
     LM.writeLog("INFO: Server started successfully on port %hu", port);
 
     // create server
     new Server();
+    new Grocer();
 
     // run server
     GM.run();

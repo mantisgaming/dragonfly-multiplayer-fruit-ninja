@@ -20,19 +20,15 @@ void Fruit::explode() {
     #endif
 }
 
-Fruit::Fruit(std::string& sprite) : NetworkObject(NetworkObject::getUniqueID(), 30){
+Fruit::Fruit(const std::string& sprite) : NetworkObject(FRUIT_TYPE_ID, NetworkObject::getUniqueID(), 30) {
 	setType(FRUIT_STRING);
-
-	if (setSprite(sprite) && NM.isClient()) {
-		LM.writeLog("WARNING: Failed to find sprite '%s'", sprite.c_str());
-	}
-
+    m_sprite = sprite;
+    setSprite(sprite);
 	setSolidness(df::SOFT);
 }
 
-Fruit::Fruit() {
+Fruit::Fruit(uint8_t netID) : NetworkObject(FRUIT_TYPE_ID, netID) {
     setType(FRUIT_STRING);
-
 }
 
 int Fruit::subEventHandler(const df::Event* p_e) {
@@ -131,4 +127,30 @@ void Fruit::start(float speed) {
     WM.moveObject(this, begin);
 
     synchronize();
+}
+
+int Fruit::serialize(std::stringstream* p_ss, unsigned int attr) {
+    uint8_t spriteNameLen = m_sprite.length();
+    p_ss->write(reinterpret_cast<char*>(&spriteNameLen), 1);
+    p_ss->write(m_sprite.c_str(), spriteNameLen);
+
+    int ok = Object::serialize(p_ss, -1) | !p_ss->good();
+    return ok;
+}
+
+int Fruit::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
+    
+    uint8_t spriteNameLen;
+    p_ss->read(reinterpret_cast<char*>(&spriteNameLen), 1);
+
+    char* str = new char[spriteNameLen + 1];
+    str[spriteNameLen] = 0;
+
+    p_ss->read(str, spriteNameLen);
+    setSprite(str);
+
+    delete[] str;
+
+    int ok = Object::deserialize(p_ss, p_a) | !p_ss->good();
+    return ok;
 }

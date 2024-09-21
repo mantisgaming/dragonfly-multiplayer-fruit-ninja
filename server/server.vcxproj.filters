@@ -16,10 +16,40 @@
     <Filter Include="Source Files\Shared">
       <UniqueIdentifier>{14379772-c031-4be3-8739-d93b01773ac0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Sprites">
+      <UniqueIdentifier>{b9d7c7bd-0ece-4c8a-bfb6-4c03a56911bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="df-config.txt">
       <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sprites\apple.txt">
+      <Filter>Resource Files\Sprites</Filter>
+    </Text>
+    <Text Include="sprites\banana.txt">
+      <Filter>Resource Files\Sprites</Filter>
+    </Text>
+    <Text Include="sprites\blueberries.txt">
+      <Filter>Resource Files\Sprites</Filter>
+    </Text>
+    <Text Include="sprites\fruit-splash.txt">
+      <Filter>Resource Files\Sprites</Filter>
+    </Text>
+    <Text Include="sprites\gameover.txt">
+      <Filter>Resource Files\Sprites</Filter>
+    </Text>
+    <Text Include="sprites\grapes.txt">
+      <Filter>Resource Files\Sprites</Filter>
+    </Text>
+    <Text Include="sprites\kudos.txt">
+      <Filter>Resource Files\Sprites</Filter>
+    </Text>
+    <Text Include="sprites\ninja-splash.txt">
+      <Filter>Resource Files\Sprites</Filter>
+    </Text>
+    <Text Include="sprites\pear.txt">
+      <Filter>Resource Files\Sprites</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +100,9 @@
     <ClCompile Include="..\shared\Util.cpp">
       <Filter>Source Files\Shared</Filter>
     </ClCompile>
+    <ClCompile Include="Grocer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="@(_SharedIncludes)" />
@@ -83,6 +116,9 @@
     <ClInclude Include="@(_SharedIncludes)" />
     <ClInclude Include="@(_SharedIncludes)" />
     <ClInclude Include="Server.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grocer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

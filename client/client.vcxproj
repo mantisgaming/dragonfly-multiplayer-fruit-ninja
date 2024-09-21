@@ -20,16 +20,27 @@
     <ClCompile Include="..\shared\NetworkUtil.cpp" />
     <ClCompile Include="..\shared\Sword.cpp" />
     <ClCompile Include="..\shared\Util.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="ConnectionField.cpp" />
     <ClCompile Include="mainClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="df-config.txt" />
+    <Text Include="sprites\apple.txt" />
+    <Text Include="sprites\banana.txt" />
+    <Text Include="sprites\blueberries.txt" />
+    <Text Include="sprites\fruit-splash.txt" />
+    <Text Include="sprites\gameover.txt" />
+    <Text Include="sprites\grapes.txt" />
+    <Text Include="sprites\kudos.txt" />
+    <Text Include="sprites\ninja-splash.txt" />
+    <Text Include="sprites\pear.txt" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="df-font.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Client.h" />
     <ClInclude Include="ConnectionField.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

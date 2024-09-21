@@ -24,9 +24,11 @@ void Util::loadSprites()
 		for (const auto& entry : std::filesystem::directory_iterator(SPRITE_PATH)) {
 			if (entry.is_directory())
 				continue;
-			RM.loadSprite(entry.path().string(), entry.path().filename().replace_extension().string());
+			std::string label = entry.path().filename().replace_extension().string();
+			if (!RM.loadSprite(entry.path().string(), label))
+				LM.writeLog("INFO: loadSprites(): Sprite '%s' loaded", label.c_str());
 		}
-		LM.writeLog("loadResources(): INFO: Sprites loaded.");
+		LM.writeLog("INFO: loadResources(): INFO: Sprites loaded.");
 	}
 	catch (std::filesystem::filesystem_error e) {
 		LM.writeLog("ERROR: Failed to read sprite(s)");

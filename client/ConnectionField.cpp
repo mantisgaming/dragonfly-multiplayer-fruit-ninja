@@ -5,6 +5,8 @@
 #include <WorldManager.h>
 #include <GameManager.h>
 
+#include "Client.h"
+
 int parseAddress(const std::string& input, std::string& address, uint16_t& port) {
     
     size_t firstInd = input.find_first_of(':');
@@ -64,6 +66,7 @@ void ConnectionField::callback() {
     LM.writeLog("INFO: ConnectionBox::callback(): Connection succeeded");
 
     WM.markForDelete(this);
+    new Client();
 
     // Create waiting screen
 }

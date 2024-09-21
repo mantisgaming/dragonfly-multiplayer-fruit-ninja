@@ -40,7 +40,7 @@ window_title:Dragonfly,
 show_mouse:false,
 
 # Run in headless mode (no graphics window or input).
-headless:true,
+headless:false,
 
 # Font file for all ASCII fonts.
 font_file:df-font.ttf,

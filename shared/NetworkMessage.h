@@ -8,6 +8,7 @@ public:
 	enum Type : uint8_t {
 		UNDEFINED = 0xffui8,
 		SYNC = 0,
+		SPAWN,
 		DESTROY,
 		DISCONNECT,
 	};

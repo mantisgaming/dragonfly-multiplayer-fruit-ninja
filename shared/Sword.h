@@ -4,6 +4,7 @@
 #include "EventNetwork.h"
 
 const std::string SWORD_STRING = "Sword";
+const uint8_t SWORD_TYPE_ID = 2;
 
 const char SWORD_CHAR = '+';
 

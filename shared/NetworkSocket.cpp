@@ -95,6 +95,7 @@ namespace df {
 			switch (WSAGetLastError()) {
 			case WSAEWOULDBLOCK:
 				return 0;
+			case WSAECONNABORTED:
 			case WSAECONNRESET:
 				LM.writeLog("INFO: A connection was reset");
 				{
@@ -121,6 +122,7 @@ namespace df {
 			switch (WSAGetLastError()) {
 			case WSAEWOULDBLOCK:
 				return 0;
+			case WSAECONNABORTED:
 			case WSAECONNRESET:
 				LM.writeLog("INFO: A connection was reset");
 				{
