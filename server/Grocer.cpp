@@ -53,7 +53,9 @@ int Grocer::step(const df::EventStep* p_e) {
             return 0;
         }
 
+        p_f->alocateObject();
         p_f->start(m_wave_speed);
+        p_f->synchronize(-1);
 
         m_spawn = m_wave_spawn;
     }

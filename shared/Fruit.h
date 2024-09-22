@@ -26,7 +26,7 @@ private:
 	std::string m_sprite;
 public:
 	Fruit(const std::string& sprite);
-	Fruit(uint8_t netID);
+	Fruit(uint8_t netID = UINT8_MAX);
 	int subEventHandler(const df::Event* p_e) override;
 	int out(const df::EventOut* p_e);
 	int collide(const df::EventCollision* p_e);

@@ -20,15 +20,16 @@ private:
 	static NetworkObject** objectList;
 	static uint8_t getFirstAvailableID();
 
-protected:
-	void syncDestroy();
-	void synchronize(unsigned int attr = 0, df::NetworkSocket* sock = NULL);
-
 public:
 	NetworkObject(uint8_t typeID, uint8_t ticksPerSync = 0, uint8_t networkID = UINT8_MAX);
 	~NetworkObject();
 	virtual int subEventHandler(const df::Event* p_e);
 	constexpr uint8_t getNetworkID() const { return m_networkID; };
 	static NetworkObject* getObject(uint8_t netID);
+	static int registerObject(NetworkObject* obj);
+	void alocateObject();
+	void setNetID(uint8_t ID);
+	void syncDestroy();
+	void synchronize(unsigned int attr = 0, df::NetworkSocket* sock = NULL);
 };
 

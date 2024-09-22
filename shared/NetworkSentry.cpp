@@ -3,6 +3,8 @@
 #include "NetworkManager.h"
 #include "NetworkObject.h"
 #include "WorldManager.h"
+#include "Fruit.h"
+#include "Sword.h"
 
 namespace df {
 
@@ -33,13 +35,24 @@ namespace df {
         switch (message.type) {
         case NetworkMessage::SYNC:
             if (object == NULL) {
-                // TODO create object
+                switch (typeID) {
+                case FRUIT_TYPE_ID:
+                    object = new Fruit();
+                    break;
+                case SWORD_TYPE_ID:
+                    object = new Sword();
+                    break;
+                default:
+                    return 0;
+                }
+                object->setNetID(netID);
+                NetworkObject::registerObject(object);
             }
-            deserialize(&stream);
+            object->deserialize(&stream);
             break;
         case NetworkMessage::DESTROY:
             if (object != NULL)
-                WM.markForDelete(this);
+                WM.markForDelete(object);
             break;
         }
 
@@ -49,6 +62,7 @@ namespace df {
     NetworkSentry::NetworkSentry()
     {
         registerInterest(STEP_EVENT);
+        registerInterest(NETWORK_EVENT);
     }
 
     int NetworkSentry::eventHandler(const Event* p_event)

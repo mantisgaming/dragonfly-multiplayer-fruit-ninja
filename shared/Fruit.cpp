@@ -25,8 +25,6 @@ Fruit::Fruit(const std::string& sprite) : NetworkObject(FRUIT_TYPE_ID, 30) {
     m_sprite = sprite;
     setSprite(sprite);
 	setSolidness(df::SOFT);
-
-    synchronize(-1);
 }
 
 Fruit::Fruit(uint8_t netID) : NetworkObject(FRUIT_TYPE_ID, netID) {

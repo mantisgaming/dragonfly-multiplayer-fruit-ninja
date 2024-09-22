@@ -7,7 +7,7 @@
 #include "NetworkMessage.h"
 #include "NetworkManager.h"
 
-NetworkObject** NetworkObject::objectList = new NetworkObject*[UINT8_MAX];
+NetworkObject** NetworkObject::objectList = NULL;
 
 int NetworkObject::stepHandler(const df::EventStep* p_e) {
 	if (m_counter == 0 && m_ticksPerSync > 0) {
@@ -20,16 +20,10 @@ int NetworkObject::stepHandler(const df::EventStep* p_e) {
 }
 
 NetworkObject::NetworkObject(uint8_t typeID, uint8_t ticksPerSync, uint8_t networkID) {
-
-	if (networkID == UINT8_MAX) {
-		networkID = getFirstAvailableID();
-	}
-
-	if (networkID == UINT8_MAX) {
-		LM.writeLog("ERROR: All network object indices are in use");
-	}
-	else {
-		objectList[networkID] = this;
+	
+	if (objectList == NULL) {
+		objectList = new NetworkObject * [UINT8_MAX];
+		memset(objectList, 0, UINT8_MAX);
 	}
 
 	m_typeID = typeID;
@@ -59,9 +53,38 @@ int NetworkObject::subEventHandler(const df::Event* p_e)
 }
 
 NetworkObject* NetworkObject::getObject(uint8_t netID) {
+	
+	if (objectList == NULL) {
+		objectList = new NetworkObject * [UINT8_MAX];
+		memset(objectList, 0, UINT8_MAX);
+	}
+
 	if (netID == UINT8_MAX)
 		return NULL;
 	return objectList[netID];
+}
+
+int NetworkObject::registerObject(NetworkObject* obj) {
+
+	if (objectList == NULL) {
+		objectList = new NetworkObject * [UINT8_MAX];
+		memset(objectList, 0, UINT8_MAX);
+	}
+
+	if (obj->m_networkID == UINT8_MAX || objectList[obj->m_networkID] != NULL)
+		return -1;
+
+	objectList[obj->m_networkID] = obj;
+	return 0;
+}
+
+void NetworkObject::alocateObject() {
+	m_networkID = getFirstAvailableID();
+	registerObject(this);
+}
+
+void NetworkObject::setNetID(uint8_t ID) {
+	m_networkID = ID;
 }
 
 int NetworkObject::eventHandler(const df::Event* p_e) {
@@ -74,6 +97,12 @@ int NetworkObject::eventHandler(const df::Event* p_e) {
 }
 
 uint8_t NetworkObject::getFirstAvailableID() {
+
+	if (objectList == NULL) {
+		objectList = new NetworkObject * [UINT8_MAX];
+		memset(objectList, 0, UINT8_MAX);
+	}
+
 	for (uint8_t i = 0; i < UINT8_MAX; i++) {
 		if (objectList[i] == NULL)
 			return i;
@@ -83,7 +112,7 @@ uint8_t NetworkObject::getFirstAvailableID() {
 
 void NetworkObject::synchronize(unsigned int attr, df::NetworkSocket* sock) {
 #ifdef SERVER
-	if (m_networkID == 0) {
+	if (m_networkID == UINT8_MAX) {
 		LM.writeLog("NetworkObject::synchronize(): WARNING: Attempted to synchronize object with invalid network ID");
 		return;
 	}

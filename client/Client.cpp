@@ -36,10 +36,6 @@ int Client::dataHandler(const df::EventNetwork* p_e) {
 
     switch (message.type) {
 
-    case NetworkMessage::SYNC:
-        spawnObject(stream);
-        return 1;
-
     case NetworkMessage::DISCONNECT:
         p_e->getSocket()->close();
         return 1;

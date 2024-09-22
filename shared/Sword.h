@@ -8,7 +8,7 @@ const uint8_t SWORD_TYPE_ID = 2;
 
 const char SWORD_CHAR = '+';
 
-class Sword : NetworkObject {
+class Sword : public NetworkObject {
 private:
 	df::Color m_color;
 	df::Vector m_old_position;
