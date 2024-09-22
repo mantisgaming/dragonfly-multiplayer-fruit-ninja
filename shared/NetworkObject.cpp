@@ -53,14 +53,14 @@ NetworkObject::NetworkObject(uint8_t typeID, uint8_t networkID, uint8_t ticksPer
 		registerInterest(df::STEP_EVENT);
 	
 	registerInterest(df::NETWORK_EVENT);
-
-	syncSpawn();
 }
 
 NetworkObject::~NetworkObject() {
+#ifdef SERVER
 	freeIDs->push_back(m_networkID);
 	if (m_ticksPerSync > 0)
 		syncDestroy();
+#endif
 }
 
 int NetworkObject::subEventHandler(const df::Event* p_e)
@@ -81,7 +81,7 @@ int NetworkObject::eventHandler(const df::Event* p_e) {
 }
 
 void NetworkObject::synchronize(unsigned int attr) {
-//#ifdef SERVER
+#ifdef SERVER
 	if (m_networkID == 0) {
 		LM.writeLog("NetworkObject::synchronize(): WARNING: Attempted to synchronize object with invalid network ID");
 		return;
@@ -100,7 +100,7 @@ void NetworkObject::synchronize(unsigned int attr) {
 	syncMsg.data = result.c_str();
 
 	NM.sendToAll(syncMsg);
-//#endif
+#endif
 }
 
 void NetworkObject::syncDestroy() {

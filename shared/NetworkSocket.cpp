@@ -18,6 +18,8 @@
 		return -1;					\
 	}
 
+const char hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
 namespace df {
 
 	int NetworkSocket::setNonBlocking() {
@@ -109,6 +111,25 @@ namespace df {
 				return -1;
 			}
 		}
+
+		std::string mystr = "";
+
+		switch (message.type) {
+		case NetworkMessage::UNDEFINED: mystr = "Undefined: "; break;
+		case NetworkMessage::DESTROY: mystr = "Destroy: "; break;
+		case NetworkMessage::DISCONNECT: mystr = "Disconnect: "; break;
+		case NetworkMessage::SPAWN: mystr = "Spawn: "; break;
+		case NetworkMessage::SYNC: mystr = "Sync: "; break;
+		}
+
+		for (int i = 0; i < message.dataSize; ++i) {
+			mystr += "0x";
+			mystr += hex[(message.data[i] & 0xf0) >> 4];
+			mystr += hex[(message.data[i] & 0x0f)];
+			mystr += " ";
+		}
+		LM.writeLog("INFO: Sent data packet: %s", mystr.c_str());
+
 		return 0;
 	}
 
@@ -175,6 +196,24 @@ namespace df {
 		}
 
 		delete[] buff;
+
+		std::string mystr = "";
+
+		switch (message.type) {
+		case NetworkMessage::UNDEFINED: mystr = "Undefined: "; break;
+		case NetworkMessage::DESTROY: mystr = "Destroy: "; break;
+		case NetworkMessage::DISCONNECT: mystr = "Disconnect: "; break;
+		case NetworkMessage::SPAWN: mystr = "Spawn: "; break;
+		case NetworkMessage::SYNC: mystr = "Sync: "; break;
+		}
+
+		for (int i = 0; i < message.dataSize; ++i) {
+			mystr += "0x";
+			mystr += hex[(message.data[i] & 0xf0) >> 4];
+			mystr += hex[(message.data[i] & 0x0f)];
+			mystr += " ";
+		}
+		LM.writeLog("INFO: Recieved data packet: %s", mystr.c_str());
 
 		return dataSize;
 	}

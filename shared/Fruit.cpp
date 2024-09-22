@@ -25,6 +25,8 @@ Fruit::Fruit(const std::string& sprite) : NetworkObject(FRUIT_TYPE_ID, NetworkOb
     m_sprite = sprite;
     setSprite(sprite);
 	setSolidness(df::SOFT);
+
+    syncSpawn();
 }
 
 Fruit::Fruit(uint8_t netID) : NetworkObject(FRUIT_TYPE_ID, netID) {
@@ -130,7 +132,7 @@ void Fruit::start(float speed) {
 }
 
 int Fruit::serialize(std::stringstream* p_ss, unsigned int attr) {
-    uint8_t spriteNameLen = m_sprite.length();
+    uint8_t spriteNameLen = (uint8_t)m_sprite.length();
     p_ss->write(reinterpret_cast<char*>(&spriteNameLen), 1);
     p_ss->write(m_sprite.c_str(), spriteNameLen);
 
