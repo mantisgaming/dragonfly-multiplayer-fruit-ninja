@@ -36,7 +36,7 @@ int Client::dataHandler(const df::EventNetwork* p_e) {
 
     switch (message.type) {
 
-    case NetworkMessage::SPAWN:
+    case NetworkMessage::SYNC:
         spawnObject(stream);
         return 1;
 

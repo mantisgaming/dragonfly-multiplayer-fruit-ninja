@@ -20,13 +20,13 @@ void Fruit::explode() {
     #endif
 }
 
-Fruit::Fruit(const std::string& sprite) : NetworkObject(FRUIT_TYPE_ID, NetworkObject::getUniqueID(), 30) {
+Fruit::Fruit(const std::string& sprite) : NetworkObject(FRUIT_TYPE_ID, 30) {
 	setType(FRUIT_STRING);
     m_sprite = sprite;
     setSprite(sprite);
 	setSolidness(df::SOFT);
 
-    syncSpawn();
+    synchronize(-1);
 }
 
 Fruit::Fruit(uint8_t netID) : NetworkObject(FRUIT_TYPE_ID, netID) {

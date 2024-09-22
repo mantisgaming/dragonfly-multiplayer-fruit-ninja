@@ -6,7 +6,7 @@ int Sword::stepEvent() {
 	return 0;
 }
 
-Sword::Sword(df::Color color) : NetworkObject(SWORD_TYPE_ID, NetworkObject::getUniqueID(), 1){
+Sword::Sword(df::Color color) : NetworkObject(SWORD_TYPE_ID, 1){
 	m_color = color;
 	m_ultimateStep = 0;
 	m_mana = 0;
