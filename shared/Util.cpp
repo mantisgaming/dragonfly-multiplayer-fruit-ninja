@@ -14,9 +14,9 @@ void Util::loadResources(void)
 // search through the SPRITE_PATH for any sprite files and load them
 void Util::loadSprites()
 {
-	LM.writeLog("loadResources(): INFO: Loading sprites...");
+	LM.writeLog("INFO: loadResources(): Loading sprites...");
 	if (!folderExists(SPRITE_PATH)) {
-		LM.writeLog("loadSprites(): WARNING: No sprites folder found");
+		LM.writeLog("WARNING: loadSprites(): No sprites folder found");
 		return;
 	}
 
@@ -28,7 +28,7 @@ void Util::loadSprites()
 			if (!RM.loadSprite(entry.path().string(), label))
 				LM.writeLog("INFO: loadSprites(): Sprite '%s' loaded", label.c_str());
 		}
-		LM.writeLog("INFO: loadResources(): INFO: Sprites loaded.");
+		LM.writeLog("INFO: loadResources(): Sprites loaded.");
 	}
 	catch (std::filesystem::filesystem_error e) {
 		LM.writeLog("ERROR: Failed to read sprite(s)");
@@ -38,9 +38,9 @@ void Util::loadSprites()
 // search through the SOUND_PATH for any sound files and load them
 void Util::loadSounds()
 {
-	LM.writeLog("loadResources(): INFO: Loading sounds...");
+	LM.writeLog("INFO: loadResources(): Loading sounds...");
 	if (!folderExists(SOUND_PATH)) {
-		LM.writeLog("loadSprites(): WARNING: No sounds folder found");
+		LM.writeLog("WARNING: loadSprites(): No sounds folder found");
 		return;
 	}
 
@@ -50,7 +50,7 @@ void Util::loadSounds()
 				continue;
 			RM.loadSound(entry.path().string(), entry.path().filename().replace_extension().string());
 		}
-		LM.writeLog("loadResources(): INFO: Sounds loaded");
+		LM.writeLog("INFO: loadResources(): Sounds loaded");
 	}
 	catch (std::filesystem::filesystem_error e) {
 		LM.writeLog("ERROR: Failed to read sound(s)");
@@ -60,9 +60,9 @@ void Util::loadSounds()
 // search through the MUSIC_PATH for any music files and load them
 void Util::loadMusic()
 {
-	LM.writeLog("loadResources(): INFO: Loading music...");
+	LM.writeLog("INFO: loadResources(): Loading music...");
 	if (!folderExists(SOUND_PATH)) {
-		LM.writeLog("loadSprites(): WARNING: No music folder found");
+		LM.writeLog("WARNING: loadSprites(): No music folder found");
 		return;
 	}
 
@@ -72,7 +72,7 @@ void Util::loadMusic()
 				continue;
 			RM.loadMusic(entry.path().string(), entry.path().filename().replace_extension().string());
 		}
-		LM.writeLog("loadResources(): INFO: Music loaded");
+		LM.writeLog("INFO: loadResources(): Music loaded");
 	}
 	catch (std::filesystem::filesystem_error e) {
 		LM.writeLog("ERROR: Failed to read music");
