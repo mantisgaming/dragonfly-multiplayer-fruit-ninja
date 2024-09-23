@@ -35,7 +35,6 @@ int Server::acceptHandler(const df::EventNetwork* p_e)
         auto sword = new Sword();
         sword->setPlayerID(ID);
         sword->alocateObject();
-        NetworkObject::registerObject(sword);
         sword->synchronize();
     }
 

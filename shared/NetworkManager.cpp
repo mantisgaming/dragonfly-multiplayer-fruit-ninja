@@ -72,10 +72,10 @@ namespace df {
 				return;
 			}
 
+			m_connections.push_back(sock);
+
 			EventNetwork e = EventNetwork(sock, EventNetwork::Label::ACCEPT);
 			WM.onEvent(&e);
-
-			m_connections.push_back(sock);
 		}
 	}
 

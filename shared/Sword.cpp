@@ -49,7 +49,7 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 	return 1;
 }
 
-Sword::Sword() : NetworkObject(SWORD_TYPE_ID, 0) {
+Sword::Sword() : NetworkObject(SWORD_TYPE_ID) {
 	m_ultimateStep = 0;
 	m_mana = 0;
 	m_old_sliced = 0;
