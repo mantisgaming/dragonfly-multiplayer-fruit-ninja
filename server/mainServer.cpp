@@ -58,6 +58,17 @@ int main(int argc, char** argv) {
     // run server
     GM.run();
 
+    df::NetworkSocket** sockets;
+    int socketCount = NM.getConnections(sockets);
+
+    char data = NM.getClientID();
+    NetworkMessage msg = { NetworkMessage::DISCONNECT, &data, 1 };
+
+    for (int i = 0; i < socketCount; i++) {
+        sockets[i]->setBlocking();
+        sockets[i]->send(msg);
+    }
+
     // shutdown everything
     NM.shutDown();
 

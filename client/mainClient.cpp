@@ -4,6 +4,7 @@
 #include <NetworkManager.h>
 #include <Util.h>
 #include "ConnectionField.h"
+#include <NetworkSocket.h>
 
 BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType);
 
@@ -39,6 +40,17 @@ int main(int argc, char** argv) {
     
     GM.run();
 
+    df::NetworkSocket** sockets;
+    int socketCount = NM.getConnections(sockets);
+
+    char data = NM.getClientID();
+    NetworkMessage msg = { NetworkMessage::DISCONNECT, &data, 1 };
+
+    for (int i = 0; i < socketCount; i++) {
+        sockets[i]->send(msg);
+    }
+
+    NM.shutDown();
     // Shut everything down.
     GM.shutDown();
 }

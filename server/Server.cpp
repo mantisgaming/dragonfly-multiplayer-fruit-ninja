@@ -11,6 +11,7 @@ int Server::dataHandler(const df::EventNetwork* p_e) {
     switch (message.type) {
 
     case NetworkMessage::DISCONNECT:
+        SetPlayerIDUsed(message.data[0], false);
         p_e->getSocket()->close();
         return 1;
 

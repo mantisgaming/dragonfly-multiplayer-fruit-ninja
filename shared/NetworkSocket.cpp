@@ -6,6 +6,7 @@
 #include "NetworkUtil.h"
 #include "EventNetwork.h"
 #include "WorldManager.h"
+#include "NetworkManager.h"
 
 // guard clause macros
 #define REQUIRE_SOCKET				\
@@ -24,6 +25,15 @@ namespace df {
 
 	int NetworkSocket::setNonBlocking() {
 		u_long arg = 1;
+		if (ioctlsocket(m_sock, FIONBIO, &arg)) {
+			logNetworkError("WARNING: ioctlsocket() FIONBIO Failed");
+			return -1;
+		}
+		return 0;
+	}
+
+	int NetworkSocket::setBlocking() {
+		u_long arg = 0;
 		if (ioctlsocket(m_sock, FIONBIO, &arg)) {
 			logNetworkError("WARNING: ioctlsocket() FIONBIO Failed");
 			return -1;

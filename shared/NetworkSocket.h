@@ -10,10 +10,12 @@ namespace df {
 	private:
 		SOCKET m_sock;
 
-		int setNonBlocking();
 		int receive(char* data, uint16_t dataSize, bool peek = false);
 
 	public:
+		int setNonBlocking();
+		int setBlocking();
+
 		NetworkSocket();
 		~NetworkSocket();
 		bool isConnected();

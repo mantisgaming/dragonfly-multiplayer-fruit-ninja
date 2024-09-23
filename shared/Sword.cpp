@@ -28,19 +28,28 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 	
 	const NetworkMessage* message = p_e->getMessage();
 
-	if (message->type != NetworkMessage::SWORD_POSITION) return 0;
+	switch (message->type) {
+	case NetworkMessage::SWORD_POSITION:
+	{
+		if (m_playerID != (int8_t)message->data[0]) return 0;
 
-	if (m_playerID != (int8_t)message->data[0]) return 0;
+		df::Vector pos;
 
-	df::Vector pos;
+		pos.setXY(*reinterpret_cast<const float*>(&message->data[1]), *reinterpret_cast<const float*>(&message->data[5]));
 
-	pos.setXY(*reinterpret_cast<const float*>(&message->data[1]), *reinterpret_cast<const float*>(&message->data[5]));
+		setPosition(pos);
+		synchronize();
 
-	setPosition(pos);
-	synchronize();
-
-	// TODO handle collisions and stuff
-
+		// TODO handle collisions and stuff
+		return 1;
+	}
+	case NetworkMessage::DISCONNECT:
+		if (m_playerID != (int8_t)message->data[0]) return 0;
+		WM.markForDelete(this);
+		return 1;
+	default:
+		return 0;
+	}
 #else
 
 	// TODO draw trails

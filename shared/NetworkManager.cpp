@@ -172,7 +172,7 @@ namespace df {
 	}
 
 	int NetworkManager::getConnectionCount() {
-		return (int)m_connections.size();;
+		return (int)m_connections.size();
 	}
 
 	int NetworkManager::getConnections(NetworkSocket**& sockets) {
@@ -203,12 +203,16 @@ namespace df {
 
 	void NetworkManager::shutDown() {
 
+		shutdownServer();
+		closeAll();
+		
+		WM.markForDelete(m_sentry);
+
 		// shutdown WSA
 		if (WSACleanup() != NO_ERROR) {
 			logNetworkError("WARNING: WSACleanup() failed");
 		}
 
-		WM.markForDelete(m_sentry);
 	}
 
 	int8_t NetworkManager::getClientID() {
