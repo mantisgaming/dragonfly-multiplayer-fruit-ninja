@@ -68,6 +68,7 @@ Sword::Sword() : NetworkObject(SWORD_TYPE_ID) {
 	m_old_position = p;
 
 	registerInterest(df::MSE_EVENT);
+	registerInterest(df::NETWORK_EVENT);
 }
 
 int Sword::subEventHandler(const df::Event* p_e) {
@@ -87,6 +88,7 @@ int Sword::serialize(std::stringstream* p_ss, unsigned int attr) {
 	p_ss->write(reinterpret_cast<char*>(&m_sliced),sizeof(m_sliced));
 	p_ss->write(reinterpret_cast<char*>(&m_old_sliced), sizeof(m_old_sliced));
 	p_ss->write(reinterpret_cast<char*>(&m_mana), sizeof(m_mana));
+	p_ss->write(reinterpret_cast<char*>(&m_playerID), sizeof(m_playerID));
 
 	ok |= !p_ss->good();
 	return ok;
@@ -99,6 +101,7 @@ int Sword::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
 	p_ss->read(reinterpret_cast<char*>(&m_sliced), sizeof(m_sliced));
 	p_ss->read(reinterpret_cast<char*>(&m_old_sliced), sizeof(m_old_sliced));
 	p_ss->read(reinterpret_cast<char*>(&m_mana), sizeof(m_mana));
+	p_ss->read(reinterpret_cast<char*>(&m_playerID), sizeof(m_playerID));
 
 	ok |= !p_ss->good();
 	return ok;
