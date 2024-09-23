@@ -23,7 +23,7 @@ NetworkObject::NetworkObject(uint8_t typeID, uint8_t ticksPerSync, uint8_t netwo
 	
 	if (objectList == NULL) {
 		objectList = new NetworkObject * [UINT8_MAX];
-		memset(objectList, 0, UINT8_MAX);
+		memset(objectList, 0, UINT8_MAX * sizeof(NetworkObject*));
 	}
 
 	m_typeID = typeID;
@@ -56,7 +56,7 @@ NetworkObject* NetworkObject::getObject(uint8_t netID) {
 	
 	if (objectList == NULL) {
 		objectList = new NetworkObject * [UINT8_MAX];
-		memset(objectList, 0, UINT8_MAX);
+		memset(objectList, 0, UINT8_MAX * sizeof(NetworkObject*));
 	}
 
 	if (netID == UINT8_MAX)
@@ -68,7 +68,7 @@ int NetworkObject::registerObject(NetworkObject* obj) {
 
 	if (objectList == NULL) {
 		objectList = new NetworkObject * [UINT8_MAX];
-		memset(objectList, 0, UINT8_MAX);
+		memset(objectList, 0, UINT8_MAX * sizeof(NetworkObject*));
 	}
 
 	if (obj->m_networkID == UINT8_MAX || objectList[obj->m_networkID] != NULL)
@@ -100,7 +100,7 @@ uint8_t NetworkObject::getFirstAvailableID() {
 
 	if (objectList == NULL) {
 		objectList = new NetworkObject * [UINT8_MAX];
-		memset(objectList, 0, UINT8_MAX);
+		memset(objectList, 0, UINT8_MAX * sizeof(NetworkObject*));
 	}
 
 	for (uint8_t i = 0; i < UINT8_MAX; i++) {

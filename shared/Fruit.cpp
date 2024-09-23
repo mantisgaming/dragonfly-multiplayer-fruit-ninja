@@ -81,7 +81,9 @@ bool Fruit::isExiting() const {
     df::Vector difference = world_center - getPosition();
     difference.normalize();
 
-    float dot = world_center.getX() * difference.getX() + world_center.getY() * difference.getY();
+    df::Vector direction = getDirection();
+
+    float dot = direction.getX() * difference.getX() + direction.getY() * difference.getY();
 
     return dot < 0;
 }

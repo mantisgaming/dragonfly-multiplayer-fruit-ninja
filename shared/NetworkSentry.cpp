@@ -17,46 +17,61 @@ namespace df {
 
     int NetworkSentry::networkHandler(const EventNetwork* p_e)
     {
-        if (p_e->getLabel() != df::EventNetwork::DATA) return 0;
+        if (p_e->getLabel() == df::EventNetwork::DATA) {
 
-        const NetworkMessage& message = *p_e->getMessage();
-        if (message.type != NetworkMessage::SYNC && message.type != NetworkMessage::DESTROY) return 0;
+            const NetworkMessage& message = *p_e->getMessage();
+            if (message.type != NetworkMessage::SYNC && message.type != NetworkMessage::DESTROY) return 0;
         
-        uint8_t netID;
-        uint8_t typeID;
+            uint8_t netID;
+            uint8_t typeID;
 
-        std::stringstream stream;
-        stream.write(message.data, message.dataSize);
-        stream.read(reinterpret_cast<char*>(&netID), 1);
-        stream.read(reinterpret_cast<char*>(&typeID), 1);
+            std::stringstream stream;
+            stream.write(message.data, message.dataSize);
+            stream.read(reinterpret_cast<char*>(&netID), 1);
+            stream.read(reinterpret_cast<char*>(&typeID), 1);
 
-        auto object = NetworkObject::getObject(netID);
+            auto object = NetworkObject::getObject(netID);
 
-        switch (message.type) {
-        case NetworkMessage::SYNC:
-            if (object == NULL) {
-                switch (typeID) {
-                case FRUIT_TYPE_ID:
-                    object = new Fruit();
-                    break;
-                case SWORD_TYPE_ID:
-                    object = new Sword();
-                    break;
-                default:
-                    return 0;
+            switch (message.type) {
+            case NetworkMessage::SYNC:
+                if (object == NULL) {
+                    switch (typeID) {
+                    case FRUIT_TYPE_ID:
+                        object = new Fruit();
+                        break;
+                    case SWORD_TYPE_ID:
+                        object = new Sword();
+                        break;
+                    default:
+                        return 0;
+                    }
+                    object->setNetID(netID);
+                    NetworkObject::registerObject(object);
                 }
-                object->setNetID(netID);
-                NetworkObject::registerObject(object);
+                object->deserialize(&stream);
+                break;
+            case NetworkMessage::DESTROY:
+                if (object != NULL)
+                    WM.markForDelete(object);
+                break;
             }
-            object->deserialize(&stream);
-            break;
-        case NetworkMessage::DESTROY:
-            if (object != NULL)
-                WM.markForDelete(object);
-            break;
+
+            return 1;
+        }
+        else if (p_e->getLabel() == df::EventNetwork::ACCEPT) {
+            
+            for (int i = 0; i < UINT8_MAX; i++) {
+                auto obj = NetworkObject::getObject(i);
+                if (obj == NULL)
+                    continue;
+
+                obj->synchronize(-1);
+            }
+
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 
     NetworkSentry::NetworkSentry()
