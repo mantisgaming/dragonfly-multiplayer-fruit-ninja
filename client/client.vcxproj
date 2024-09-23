@@ -109,9 +109,7 @@
 xcopy "$(projectdir)df-font.ttf" "$(outdir)" /Y
 xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\*-d-2.dll" "$(outdir)" /Y
 xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\openal32.dll" "$(outdir)" /Y
-xcopy "$(projectdir)sprites" "$(outdir)\sprites" /Y /I
-xcopy "$(projectdir)sounds" "$(outdir)\sounds" /Y /I
-xcopy "$(projectdir)music" "$(outdir)\music" /Y /I</Command>
+xcopy "$(projectdir)resources" "$(outdir)resources" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -138,9 +136,7 @@ xcopy "$(projectdir)df-font.ttf" "$(outdir)" /Y
 xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\*-2.dll" "$(outdir)" /Y
 del "$(outdir)*-d-2.dll"
 xcopy "$(solutiondir)libraries\SFML-2.6.1\bin\openal32.dll" "$(outdir)" /Y
-xcopy "$(projectdir)sprites" "$(outdir)\sprites" /Y /I
-xcopy "$(projectdir)sounds" "$(outdir)\sounds" /Y /I
-xcopy "$(projectdir)music" "$(outdir)\music" /Y /I</Command>
+xcopy "$(projectdir)resources" "$(outdir)resources" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

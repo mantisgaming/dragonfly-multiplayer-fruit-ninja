@@ -5,27 +5,7 @@
 #include <NetworkObject.h>
 #include <Fruit.h>
 
-void Client::spawnObject(std::stringstream& stream) {
-    uint8_t id;
-    uint8_t type;
-    stream.read(reinterpret_cast<char*>(&id), 1);
-    stream.read(reinterpret_cast<char*>(&type), 1);
-
-    NetworkObject* object = NULL;
-
-    switch (type) {
-
-    case FRUIT_TYPE_ID:
-        object = new Fruit(id);
-        break;
-
-    default:
-        LM.writeLog("WARNING: Recieved unknown type ID: %uc", id);
-    }
-
-    if (object != NULL)
-        object->deserialize(&stream);
-}
+Client* Client::instance = NULL;
 
 int Client::dataHandler(const df::EventNetwork* p_e) {
     LM.writeLog("INFO: Data received");
@@ -81,6 +61,8 @@ int Client::stepHandler() {
 }
 
 Client::Client() {
+    instance = this;
+    m_playerID = -1;
     registerInterest(df::NETWORK_EVENT);
 }
 
@@ -94,4 +76,8 @@ int Client::eventHandler(const df::Event* p_e)
         return stepHandler();
     }
     return 0;
+}
+
+Client& Client::getInstance() {
+    return *instance;
 }

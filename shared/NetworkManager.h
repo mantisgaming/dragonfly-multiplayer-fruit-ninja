@@ -19,6 +19,7 @@ namespace df {
 		std::vector<NetworkSocket*> m_connections;
 		static inline NetworkManager* instance = NULL;
 		NetworkSentry* m_sentry;
+		int8_t m_clientID;
 
 		NetworkManager();
 		NetworkManager(NetworkManager& other);
@@ -50,6 +51,8 @@ namespace df {
 
 		int startUp();
 		void shutDown();
+		int8_t getClientID();
+		void setClientID(int8_t ID);
 	};
 
 }

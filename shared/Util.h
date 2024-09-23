@@ -2,9 +2,9 @@
 
 #include <string>
 
-const std::string SPRITE_PATH = ".\\sprites";
-const std::string SOUND_PATH = ".\\sounds";
-const std::string MUSIC_PATH = ".\\music";
+const std::string SPRITE_PATH = ".\\resources\\sprites";
+const std::string SOUND_PATH = ".\\resources\\sounds";
+const std::string MUSIC_PATH = ".\\resources\\music";
 
 class Util
 {

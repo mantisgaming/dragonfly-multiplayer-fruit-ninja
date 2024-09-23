@@ -20,8 +20,7 @@ namespace df {
         if (p_e->getLabel() == df::EventNetwork::DATA) {
 
             const NetworkMessage& message = *p_e->getMessage();
-            if (message.type != NetworkMessage::SYNC && message.type != NetworkMessage::DESTROY) return 0;
-        
+
             uint8_t netID;
             uint8_t typeID;
 
@@ -33,6 +32,7 @@ namespace df {
             auto object = NetworkObject::getObject(netID);
 
             switch (message.type) {
+
             case NetworkMessage::SYNC:
                 if (object == NULL) {
                     switch (typeID) {
@@ -49,14 +49,21 @@ namespace df {
                     NetworkObject::registerObject(object);
                 }
                 object->deserialize(&stream);
-                break;
-            case NetworkMessage::DESTROY:
-                if (object != NULL)
-                    WM.markForDelete(object);
-                break;
-            }
+                return 1;
 
-            return 1;
+            case NetworkMessage::DESTROY:
+                if (object != NULL) 
+                    WM.markForDelete(object);
+                return 1;
+
+#ifdef CLIENT
+            case NetworkMessage::ASSIGN_CLIENT:
+                NM.setClientID((int8_t)message.data[0]);
+                return 1;
+#endif
+            default:
+                return 0;
+            }
         }
         else if (p_e->getLabel() == df::EventNetwork::ACCEPT) {
             

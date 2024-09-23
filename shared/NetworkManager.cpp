@@ -17,6 +17,7 @@ namespace df {
 	NetworkManager::NetworkManager() {
 		m_listener = NULL;
 		m_sentry = NULL;
+		m_clientID = -1;
 		m_connections.clear();
 	}
 	
@@ -208,6 +209,14 @@ namespace df {
 		}
 
 		WM.markForDelete(m_sentry);
+	}
+
+	int8_t NetworkManager::getClientID() {
+		return m_clientID;
+	}
+
+	void NetworkManager::setClientID(int8_t ID) {
+		m_clientID = ID;
 	}
 
 }

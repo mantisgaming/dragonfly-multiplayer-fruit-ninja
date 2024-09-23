@@ -112,13 +112,14 @@ namespace df {
 			}
 		}
 
-		/*std::string mystr = "";
+		std::string mystr = "";
 
 		switch (message.type) {
 		case NetworkMessage::UNDEFINED: mystr = "Undefined: "; break;
 		case NetworkMessage::DESTROY: mystr = "Destroy: "; break;
 		case NetworkMessage::DISCONNECT: mystr = "Disconnect: "; break;
 		case NetworkMessage::SYNC: mystr = "Sync: "; break;
+		case NetworkMessage::ASSIGN_CLIENT: mystr = "Assign Client: "; break;
 		}
 
 		for (int i = 0; i < message.dataSize; ++i) {
@@ -127,7 +128,7 @@ namespace df {
 			mystr += hex[(message.data[i] & 0x0f)];
 			mystr += " ";
 		}
-		LM.writeLog("INFO: Sent data packet: %s", mystr.c_str());*/
+		LM.writeLog("INFO: Sent data packet: %s", mystr.c_str());
 
 		return 0;
 	}
@@ -196,13 +197,14 @@ namespace df {
 
 		delete[] buff;
 
-		/*std::string mystr = "";
+		std::string mystr = "";
 
 		switch (message.type) {
 		case NetworkMessage::UNDEFINED: mystr = "Undefined: "; break;
 		case NetworkMessage::DESTROY: mystr = "Destroy: "; break;
 		case NetworkMessage::DISCONNECT: mystr = "Disconnect: "; break;
 		case NetworkMessage::SYNC: mystr = "Sync: "; break;
+		case NetworkMessage::ASSIGN_CLIENT: mystr = "Assign Client: "; break;
 		}
 
 		for (int i = 0; i < message.dataSize; ++i) {
@@ -211,7 +213,7 @@ namespace df {
 			mystr += hex[(message.data[i] & 0x0f)];
 			mystr += " ";
 		}
-		LM.writeLog("INFO: Recieved data packet: %s", mystr.c_str());*/
+		LM.writeLog("INFO: Recieved data packet: %s", mystr.c_str());
 
 		return dataSize;
 	}

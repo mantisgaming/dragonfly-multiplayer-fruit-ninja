@@ -10,10 +10,11 @@ public:
 		SYNC = 0,
 		DESTROY,
 		DISCONNECT,
+		ASSIGN_CLIENT,
+		SWORD_POSITION,
 	};
 
 	Type type;
 	const char* data;
 	uint16_t dataSize;
 };
-
