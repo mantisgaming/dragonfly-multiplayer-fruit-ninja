@@ -112,7 +112,7 @@ namespace df {
 			}
 		}
 
-		std::string mystr = "";
+		/*std::string mystr = "";
 
 		switch (message.type) {
 		case NetworkMessage::UNDEFINED: mystr = "Undefined: "; break;
@@ -127,7 +127,7 @@ namespace df {
 			mystr += hex[(message.data[i] & 0x0f)];
 			mystr += " ";
 		}
-		LM.writeLog("INFO: Sent data packet: %s", mystr.c_str());
+		LM.writeLog("INFO: Sent data packet: %s", mystr.c_str());*/
 
 		return 0;
 	}
@@ -196,7 +196,7 @@ namespace df {
 
 		delete[] buff;
 
-		std::string mystr = "";
+		/*std::string mystr = "";
 
 		switch (message.type) {
 		case NetworkMessage::UNDEFINED: mystr = "Undefined: "; break;
@@ -211,7 +211,7 @@ namespace df {
 			mystr += hex[(message.data[i] & 0x0f)];
 			mystr += " ";
 		}
-		LM.writeLog("INFO: Recieved data packet: %s", mystr.c_str());
+		LM.writeLog("INFO: Recieved data packet: %s", mystr.c_str());*/
 
 		return dataSize;
 	}
