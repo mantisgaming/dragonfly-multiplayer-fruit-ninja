@@ -46,9 +46,7 @@ int main(int argc, char** argv) {
     char data = NM.getClientID();
     NetworkMessage msg = { NetworkMessage::DISCONNECT, &data, 1 };
 
-    for (int i = 0; i < socketCount; i++) {
-        sockets[i]->send(msg);
-    }
+    NM.sendToAll(msg);
 
     NM.shutDown();
     // Shut everything down.
