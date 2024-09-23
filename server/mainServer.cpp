@@ -66,6 +66,9 @@ int main(int argc, char** argv) {
 
     NM.sendToAll(msg);
 
+    NM.setAllowSending(false);
+    NM.recieve();
+
     // shutdown everything
     NM.shutDown();
 

@@ -21,6 +21,8 @@ namespace df {
 		NetworkSentry* m_sentry;
 		int8_t m_clientID;
 
+		bool m_allowSending;
+
 		NetworkManager();
 		NetworkManager(NetworkManager& other);
 		NetworkManager& operator=(NetworkManager& other);
@@ -43,6 +45,7 @@ namespace df {
 		void recieve();
 		int connect(std::string address, uint16_t port);
 
+		void close(NetworkSocket* sock);
 		void closeAll();
 		void checkConnections();
 		bool hasConnection(NetworkSocket* sock);
@@ -53,6 +56,7 @@ namespace df {
 		void shutDown();
 		int8_t getClientID();
 		void setClientID(int8_t ID);
+		void setAllowSending(bool allow);
 	};
 
 }

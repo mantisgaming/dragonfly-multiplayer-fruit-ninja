@@ -18,6 +18,7 @@ namespace df {
 		m_listener = NULL;
 		m_sentry = NULL;
 		m_clientID = -1;
+		m_allowSending = true;
 		m_connections.clear();
 	}
 	
@@ -80,6 +81,8 @@ namespace df {
 	}
 
 	void NetworkManager::sendToAll(NetworkMessage& message) {
+		if (!m_allowSending) return;
+
 		for (int i = 0; i < m_connections.size(); i++) {
 			m_connections[i]->send(message);
 		}
@@ -132,6 +135,23 @@ namespace df {
 
 		m_connections.push_back(sock);
 		return 0;
+	}
+
+	void NetworkManager::close(NetworkSocket* sock) {
+		sock->close();
+
+		if (!hasConnection(sock)) return;
+
+		for (int i = 0; i < getConnectionCount(); i++) {
+			if (m_connections[i] == sock) {
+				m_connections[i] = m_connections[getConnectionCount()-1];
+				m_connections.pop_back();
+
+				EventNetwork evnt = EventNetwork(sock, EventNetwork::CLOSE);
+				WM.onEvent(&evnt);
+				return;
+			}
+		}
 	}
 
 	void NetworkManager::closeAll()
@@ -221,6 +241,10 @@ namespace df {
 
 	void NetworkManager::setClientID(int8_t ID) {
 		m_clientID = ID;
+	}
+
+	void NetworkManager::setAllowSending(bool allow) {
+		m_allowSending = allow;
 	}
 
 }
