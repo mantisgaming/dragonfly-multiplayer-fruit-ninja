@@ -3,6 +3,7 @@
 #include <LogManager.h>
 #include <ResourceManager.h>
 #include <filesystem>
+#include <Fader.h>
 
 void Util::loadResources(void)
 {
@@ -84,4 +85,28 @@ bool Util::folderExists(std::string folder)
 {
 	std::filesystem::path path = std::filesystem::path(folder);
 	return std::filesystem::exists(path) && std::filesystem::is_directory(path);
+}
+
+void Util::drawTrail(df::Vector start, df::Vector end, df::Color color) {
+#ifdef CLIENT
+	const float size = 6;
+	const int age = 5;
+	const int opacity = 255;
+
+	unsigned char r, g, b;
+	df::colorToRGB(color, r, g, b);
+
+	// Calculate step size for interpolation.
+	float dist = df::distance(start, end) * 10;
+	float dX = (start.getX() - end.getX()) / (dist + 1.0f);
+	float dY = (start.getY() - end.getY()) / (dist + 1.0f);
+
+	// Create Fader particles on line from p1 to p2.
+	for (int i = 0; i < dist / 3; i++) {
+		float x = end.getX() + dX * i * 3;
+		float y = end.getY() + dY * i * 3;
+		df::Fader* p_f = new df::Fader(size, age, opacity, r, g, b);
+		p_f->setPosition(df::Vector(x, y));
+	}
+#endif
 }

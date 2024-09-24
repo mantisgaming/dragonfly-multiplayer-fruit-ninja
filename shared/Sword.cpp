@@ -2,6 +2,7 @@
 #include "DisplayManager.h"
 #include "NetworkManager.h"
 #include "WorldManager.h"
+#include "Util.h"
 
 int Sword::mouseHandler(df::EventMouse* p_e) {
 	if (!belongsToClient()) {
@@ -34,7 +35,7 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		if (m_playerID != (int8_t)message->data[0]) return 0;
 
 		df::Vector pos;
-
+		m_old_position = getPosition();
 		pos.setXY(*reinterpret_cast<const float*>(&message->data[1]), *reinterpret_cast<const float*>(&message->data[5]));
 
 		setPosition(pos);
@@ -52,7 +53,8 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 	}
 #else
 
-	// TODO draw trails
+	// Make a trail from last position to current.
+	Util::drawTrail(getPosition(), m_old_position, getColor());
 
 #endif
 	return 1;
