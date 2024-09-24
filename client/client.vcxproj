@@ -43,6 +43,35 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="ConnectionField.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sounds\beep.wav" />
+    <Media Include="resources\sounds\game-over.wav" />
+    <Media Include="resources\sounds\game-start.wav" />
+    <Media Include="resources\sounds\impact.wav" />
+    <Media Include="resources\sounds\kudos-1.wav" />
+    <Media Include="resources\sounds\kudos-10.wav" />
+    <Media Include="resources\sounds\kudos-2.wav" />
+    <Media Include="resources\sounds\kudos-3.wav" />
+    <Media Include="resources\sounds\kudos-4.wav" />
+    <Media Include="resources\sounds\kudos-5.wav" />
+    <Media Include="resources\sounds\kudos-6.wav" />
+    <Media Include="resources\sounds\kudos-7.wav" />
+    <Media Include="resources\sounds\kudos-8.wav" />
+    <Media Include="resources\sounds\kudos-9.wav" />
+    <Media Include="resources\sounds\splat-1.wav" />
+    <Media Include="resources\sounds\splat-2.wav" />
+    <Media Include="resources\sounds\splat-3.wav" />
+    <Media Include="resources\sounds\splat-4.wav" />
+    <Media Include="resources\sounds\splat-5.wav" />
+    <Media Include="resources\sounds\splat-6.wav" />
+    <Media Include="resources\sounds\swipe-1.wav" />
+    <Media Include="resources\sounds\swipe-2.wav" />
+    <Media Include="resources\sounds\swipe-3.wav" />
+    <Media Include="resources\sounds\swipe-4.wav" />
+    <Media Include="resources\sounds\swipe-5.wav" />
+    <Media Include="resources\sounds\swipe-6.wav" />
+    <Media Include="resources\sounds\swipe-7.wav" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

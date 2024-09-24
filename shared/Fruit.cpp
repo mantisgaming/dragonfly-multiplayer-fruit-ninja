@@ -23,12 +23,19 @@ void Fruit::explode() {
 Fruit::Fruit(const std::string& sprite) : NetworkObject(FRUIT_TYPE_ID, 30) {
 	setType(FRUIT_STRING);
     m_sprite = sprite;
+    m_playSound = false;
     setSprite(sprite);
 	setSolidness(df::SOFT);
 }
 
 Fruit::Fruit(uint8_t netID) : NetworkObject(FRUIT_TYPE_ID, netID) {
     setType(FRUIT_STRING);
+    m_playSound = false;
+}
+
+Fruit::~Fruit() {
+    if (m_playSound)
+        explode();
 }
 
 int Fruit::subEventHandler(const df::Event* p_e) {
@@ -59,10 +66,9 @@ int Fruit::collide(const df::EventCollision* p_e) {
         if (p_e->getObject1()->getType() == SWORD_STRING) {
 
             // TODO trigger fruit hit event
-
+            m_playSound = true;
+            synchronize();
             WM.markForDelete(this);
-
-            explode();
         }
         return 1;
     #endif
@@ -74,6 +80,7 @@ int Fruit::collide(const df::EventCollision* p_e) {
 // and the position relative to the center of the screen
 // is negative, then it is exiting
 bool Fruit::isExiting() const {
+
     int world_x = (int)WM.getBoundary().getHorizontal();
     int world_y = (int)WM.getBoundary().getVertical();
     df::Vector world_center(world_x / 2.0f, world_y / 2.0f);
@@ -135,6 +142,7 @@ int Fruit::serialize(std::stringstream* p_ss, unsigned int attr) {
     uint8_t spriteNameLen = (uint8_t)m_sprite.length();
     p_ss->write(reinterpret_cast<char*>(&spriteNameLen), 1);
     p_ss->write(m_sprite.c_str(), spriteNameLen);
+    p_ss->write(reinterpret_cast<char*>(&m_playSound), 1);
 
     int ok = Object::serialize(p_ss, -1) | !p_ss->good();
     return ok;
@@ -152,6 +160,8 @@ int Fruit::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
     setSprite(str);
 
     delete[] str;
+
+    p_ss->read(reinterpret_cast<char*>(&m_playSound), 1);
 
     int ok = Object::deserialize(p_ss, p_a) | !p_ss->good();
     return ok;

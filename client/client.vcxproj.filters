@@ -19,6 +19,9 @@
     <Filter Include="Resource Files\Sprites">
       <UniqueIdentifier>{0fe30ed0-4bfe-4c1e-947b-264fc1f46e41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Sounds">
+      <UniqueIdentifier>{8b9b28c3-1dda-4f44-a532-c4c6fa90cd86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="df-config.txt">
@@ -102,5 +105,88 @@
     <ClInclude Include="Client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sounds\game-over.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\game-start.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\impact.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-1.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-2.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-3.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-4.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-5.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-6.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-7.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-8.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-9.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\kudos-10.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\splat-1.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\splat-2.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\splat-3.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\splat-4.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\splat-5.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\splat-6.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\swipe-1.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\swipe-2.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\swipe-3.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\swipe-4.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\swipe-5.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\swipe-6.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\swipe-7.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="resources\sounds\beep.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>

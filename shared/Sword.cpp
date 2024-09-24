@@ -1,8 +1,14 @@
 #include "Sword.h"
-#include "DisplayManager.h"
+
+#include <utility.h>
+#include <DisplayManager.h>
+#include <EventCollision.h>
+#include <WorldManager.h>
+#include <GameManager.h>
+
 #include "NetworkManager.h"
-#include "WorldManager.h"
 #include "Util.h"
+#include "Fruit.h"
 
 int Sword::mouseHandler(df::EventMouse* p_e) {
 	if (!belongsToClient()) {
@@ -24,11 +30,11 @@ int Sword::mouseHandler(df::EventMouse* p_e) {
 }
 
 int Sword::networkHandler(df::EventNetwork* p_e) {
-#ifdef SERVER
 	if (p_e->getLabel() != df::EventNetwork::DATA) return 0;
-	
+
 	const NetworkMessage* message = p_e->getMessage();
 
+#ifdef SERVER
 	switch (message->type) {
 	case NetworkMessage::SWORD_POSITION:
 	{
@@ -41,7 +47,8 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		setPosition(pos);
 		synchronize();
 
-		// TODO handle collisions and stuff
+		handleCollisions();
+
 		return 1;
 	}
 	case NetworkMessage::DISCONNECT:
@@ -52,12 +59,49 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		return 0;
 	}
 #else
+	switch (message->type) {
+	case NetworkMessage::SYNC:
+		if (getNetworkID() != (int8_t)message->data[0]) return 0;
+		
+		Util::drawTrail(getPosition(), m_old_position, getColor());
+		return 1;
 
-	// Make a trail from last position to current.
-	Util::drawTrail(getPosition(), m_old_position, getColor());
-
+	default:
+		return 0;
+	}
 #endif
-	return 1;
+}
+
+void Sword::handleCollisions() {
+
+	// Check if line intersects any Fruit objects.
+	df::Line line(getPosition(), m_old_position);
+	df::ObjectList ol = WM.solidObjects();
+
+	for (int i = 0; i < ol.getCount(); i++) {
+
+		// Only slice Fruit.
+		if (!(dynamic_cast <Fruit*> (ol[i])))
+			continue;
+
+		// If line from previous position intersects --> slice!
+		df::Object* p_o = ol[i];
+		df::Box box = getWorldBox(p_o);
+		if (lineIntersectsBox(line, box)) {
+			df::EventCollision c(this, p_o, p_o->getPosition());
+			p_o->eventHandler(&c);
+			m_sliced += 1;
+
+			//// Spawn kudos for combo.
+			//if (m_sliced > 2 && m_sliced > m_old_sliced)
+			//	new Kudos();
+
+			m_old_sliced = m_sliced;
+
+		}
+
+	}
+
 }
 
 Sword::Sword() : NetworkObject(SWORD_TYPE_ID) {

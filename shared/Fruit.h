@@ -24,9 +24,11 @@ class Fruit : public NetworkObject {
 private:
 	void explode();
 	std::string m_sprite;
+	bool m_playSound;
 public:
 	Fruit(const std::string& sprite);
 	Fruit(uint8_t netID = UINT8_MAX);
+	~Fruit();
 	int subEventHandler(const df::Event* p_e) override;
 	int out(const df::EventOut* p_e);
 	int collide(const df::EventCollision* p_e);
