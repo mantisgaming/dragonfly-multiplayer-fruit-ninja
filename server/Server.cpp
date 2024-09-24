@@ -2,8 +2,8 @@
 
 #include <LogManager.h>
 #include <NetworkManager.h>
-
-#include "Sword.h"
+#include <Timer.h>
+#include <Sword.h>
 
 int Server::dataHandler(const df::EventNetwork* p_e) {
     LM.writeLog("INFO: Data received");
@@ -94,6 +94,9 @@ void Server::SetPlayerIDUsed(int8_t ID, bool used) {
 Server::Server() {
     registerInterest(df::NETWORK_EVENT);
     m_playersUsed = 0;
+    auto timer = new Timer();
+    timer->alocateObject();
+    timer->synchronize();
 }
 
 int Server::eventHandler(const df::Event* p_e)

@@ -19,6 +19,7 @@
     <ClCompile Include="..\shared\NetworkSocket.cpp" />
     <ClCompile Include="..\shared\NetworkUtil.cpp" />
     <ClCompile Include="..\shared\Sword.cpp" />
+    <ClCompile Include="..\shared\Timer.cpp" />
     <ClCompile Include="..\shared\Util.cpp" />
     <ClCompile Include="Grocer.cpp" />
     <ClCompile Include="mainServer.cpp" />

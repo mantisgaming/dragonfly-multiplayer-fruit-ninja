@@ -5,6 +5,7 @@
 #include "WorldManager.h"
 #include "Fruit.h"
 #include "Sword.h"
+#include "Timer.h"
 
 namespace df {
 
@@ -41,6 +42,9 @@ namespace df {
                         break;
                     case SWORD_TYPE_ID:
                         object = new Sword();
+                        break;
+                    case TIMER_TYPE_ID:
+                        object = new Timer();
                         break;
                     default:
                         return 0;
