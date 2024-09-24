@@ -17,9 +17,8 @@ private:
 
 	static bool folderExists(std::string folder);
 
-	static void drawTrail(df::Vector start, df::Vector end, df::Color color);
-
 public:
 	static void loadResources();
+	static void drawTrail(df::Vector start, df::Vector end, df::Color color);
 };
 
