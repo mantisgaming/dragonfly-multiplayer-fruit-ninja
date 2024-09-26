@@ -67,7 +67,7 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		
 		Util::drawTrail(getPosition(), m_old_position, getColor());
 
-		if (m_sliced > 2 && m_sliced > m_old_sliced)
+		if (m_sliced > 2 && m_sliced > m_old_sliced && getPlayerID() == NM.getClientID())
 			new Kudos();
 
 		// If travel far enough, play "swipe" sound.
