@@ -33,26 +33,31 @@ int Server::acceptHandler(const df::EventNetwork* p_e)
 {
     LM.writeLog("INFO: Accepted connection");
 
-    auto ID = getFirstAvailablePlayerID();
+    // only assign a sword if the game has not started yet
+    if (!m_hasStarted) {
 
-    // assign the player ID
-    NetworkMessage msg = { NetworkMessage::ASSIGN_CLIENT, reinterpret_cast<char*>(&ID), 1};
-    p_e->getSocket()->send(msg);
+        auto ID = getFirstAvailablePlayerID();
 
-    // spawn a sword for the player, if they are one of the first 4 and the game has not started yet
-    if (ID < 4 && ID >= 0 && !m_hasStarted) {
-        SetPlayerIDUsed(ID);
-
-        auto sword = new Sword();
-        sword->setPlayerID(ID);
-        sword->alocateObject();
-        sword->synchronize();
-    }
-
-    // give player 0 the start prompt if the game has not started yet
-    if (ID == 0 && !m_hasStarted) {
-        msg = { NetworkMessage::SHOW_START_PROMPT };
+        // assign the player ID
+        NetworkMessage msg = { NetworkMessage::ASSIGN_CLIENT, reinterpret_cast<char*>(&ID), 1};
         p_e->getSocket()->send(msg);
+
+        // spawn a sword for the player, if they are one of the first 4 and the game has not started yet
+        if (ID < 4 && ID >= 0) {
+            SetPlayerIDUsed(ID);
+
+            auto sword = new Sword();
+            sword->setPlayerID(ID);
+            sword->alocateObject();
+            sword->synchronize();
+        }
+
+        // give player 0 the start prompt if the game has not started yet
+        if (ID == 0) {
+            msg = { NetworkMessage::SHOW_START_PROMPT };
+            p_e->getSocket()->send(msg);
+        }
+
     }
 
     return 1;

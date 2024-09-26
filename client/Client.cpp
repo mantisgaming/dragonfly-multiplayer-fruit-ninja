@@ -4,6 +4,7 @@
 #include <NetworkManager.h>
 #include <NetworkObject.h>
 #include <Fruit.h>
+#include <WorldManager.h>
 
 #include "GameOver.h"
 #include "StartButton.h"
@@ -21,6 +22,19 @@ int Client::dataHandler(const df::EventNetwork* p_e) {
 
     case NetworkMessage::DISCONNECT:
         p_e->getSocket()->close();
+        { // delete all fruits if the client disconnects
+            df::ObjectList ol = WM.solidObjects();
+            for (int i = 0; i < ol.getCount(); i++)
+                if (dynamic_cast <Fruit*> (ol[i]))
+                    WM.markForDelete(ol[i]);
+
+            auto vo = new df::ViewObject();
+            vo->setLocation(df::CENTER_CENTER);
+            vo->setBorder(true);
+            vo->setViewString("Server Closed");
+            vo->setDrawValue(false);
+            vo->setColor(df::RED);
+        }
         return 1;
 
     case NetworkMessage::GAME_OVER:
