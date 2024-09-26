@@ -6,6 +6,7 @@
 #include "Fruit.h"
 #include "Sword.h"
 #include "Timer.h"
+#include "Score.h"
 
 namespace df {
 
@@ -45,6 +46,9 @@ namespace df {
                         break;
                     case TIMER_TYPE_ID:
                         object = new Timer();
+                        break;
+                    case SCORE_TYPE_ID:
+                        object = new Score();
                         break;
                     default:
                         return 0;

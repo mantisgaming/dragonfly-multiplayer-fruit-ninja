@@ -15,6 +15,7 @@ private:
 	uint8_t m_playersUsed;
 	int8_t getFirstAvailablePlayerID();
 	void SetPlayerIDUsed(int8_t ID, bool used = true);
+	bool isPlayerPresent(int8_t ID);
 public:
 	Server();
 	int eventHandler(const df::Event* p_e) override;

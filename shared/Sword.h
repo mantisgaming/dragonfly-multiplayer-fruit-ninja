@@ -35,5 +35,6 @@ public:
 	int8_t getPlayerID() const;
 	void setPlayerID(int8_t ID);
 	df::Color getColor();
+	static df::Color getColor(int8_t ID);
 	bool belongsToClient();
 };

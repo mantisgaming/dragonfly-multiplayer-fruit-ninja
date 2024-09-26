@@ -4,6 +4,7 @@
 #include <NetworkManager.h>
 #include <Sword.h>
 #include <GameManager.h>
+#include <Score.h>
 
 #include "Grocer.h"
 
@@ -22,6 +23,14 @@ int Server::dataHandler(const df::EventNetwork* p_e) {
     case NetworkMessage::START_GAME:
         m_hasStarted = true;
         new Grocer();
+        for (int i = 0; i < 4; i++) {
+            if (isPlayerPresent(i)) {
+                auto sc = new Score();
+                sc->setPlayerID(i);
+                sc->alocateObject();
+                sc->synchronize();
+            }
+        }
         return 1;
 
     default:
@@ -110,6 +119,10 @@ void Server::SetPlayerIDUsed(int8_t ID, bool used) {
 
     m_playersUsed |= used ? (1 << ID) : 0;
     m_playersUsed &= 0xFF ^ ((!used) ? (1 << ID) : 0);
+}
+
+bool Server::isPlayerPresent(int8_t ID) {
+    return (m_playersUsed >> ID) & 1;
 }
 
 Server::Server() {

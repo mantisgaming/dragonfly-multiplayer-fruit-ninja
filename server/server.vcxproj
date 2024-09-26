@@ -12,12 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\shared\EventNetwork.cpp" />
+    <ClCompile Include="..\shared\EventScore.cpp" />
     <ClCompile Include="..\shared\Fruit.cpp" />
     <ClCompile Include="..\shared\NetworkManager.cpp" />
     <ClCompile Include="..\shared\NetworkObject.cpp" />
     <ClCompile Include="..\shared\NetworkSentry.cpp" />
     <ClCompile Include="..\shared\NetworkSocket.cpp" />
     <ClCompile Include="..\shared\NetworkUtil.cpp" />
+    <ClCompile Include="..\shared\Score.cpp" />
     <ClCompile Include="..\shared\Sword.cpp" />
     <ClCompile Include="..\shared\Timer.cpp" />
     <ClCompile Include="..\shared\Util.cpp" />

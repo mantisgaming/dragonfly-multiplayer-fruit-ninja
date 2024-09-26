@@ -109,6 +109,12 @@
     <ClCompile Include="Splash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\shared\Score.cpp">
+      <Filter>Source Files\Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\EventScore.cpp">
+      <Filter>Source Files\Shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConnectionField.h">

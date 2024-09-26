@@ -5,6 +5,7 @@
 #include <EventCollision.h>
 #include <WorldManager.h>
 #include <GameManager.h>
+#include <ResourceManager.h>
 
 #include "NetworkManager.h"
 #include "Util.h"
@@ -71,10 +72,12 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		//	new Kudos();
 
 		// If travel far enough, play "swipe" sound.
-		float dist = df::distance(getPosition(), m_old_position);
-		if (dist > 15) {
-			std::string sound = "swipe-" + std::to_string(rand() % 7 + 1);
-			play_sound(sound);
+		{
+			float dist = df::distance(getPosition(), m_old_position);
+			if (dist > 15) {
+				std::string sound = "swipe-" + std::to_string(rand() % 7 + 1);
+				RM.getSound(sound)->play();
+			}
 		}
 
 		return 1;
@@ -191,9 +194,13 @@ void Sword::setPlayerID(int8_t ID) {
 }
 
 df::Color Sword::getColor() {
-	if (m_playerID < 0)
+	return getColor(m_playerID);
+}
+
+df::Color Sword::getColor(int8_t ID) {
+	if (ID < 0)
 		return df::COLOR_DEFAULT;
-	return SWORD_COLORS[m_playerID % SWORD_COLOR_COUNT];
+	return SWORD_COLORS[ID % SWORD_COLOR_COUNT];
 }
 
 bool Sword::belongsToClient() {

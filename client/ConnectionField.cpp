@@ -38,7 +38,7 @@ ConnectionField::ConnectionField() {
 }
 
 void ConnectionField::callback() {
-
+    
     LM.writeLog("INFO: ConnectionBox::callback(): attempting connection to address: %s", getText().c_str());
     setColor(df::WHITE);
 
@@ -66,7 +66,4 @@ void ConnectionField::callback() {
     LM.writeLog("INFO: ConnectionBox::callback(): Connection succeeded");
 
     WM.markForDelete(this);
-    new Client();
-
-    // Create waiting screen
 }

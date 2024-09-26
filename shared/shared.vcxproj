@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventNetwork.h" />
+    <ClInclude Include="EventScore.h" />
     <ClInclude Include="Fruit.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="NetworkMessage.h" />
@@ -19,18 +20,21 @@
     <ClInclude Include="NetworkSentry.h" />
     <ClInclude Include="NetworkSocket.h" />
     <ClInclude Include="NetworkUtil.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EventNetwork.cpp" />
+    <ClCompile Include="EventScore.cpp" />
     <ClCompile Include="Fruit.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="NetworkObject.cpp" />
     <ClCompile Include="NetworkSentry.cpp" />
     <ClCompile Include="NetworkSocket.cpp" />
     <ClCompile Include="NetworkUtil.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Util.cpp" />

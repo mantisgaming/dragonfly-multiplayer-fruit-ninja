@@ -6,6 +6,7 @@
 #include "ConnectionField.h"
 #include <NetworkSocket.h>
 #include "Splash.h"
+#include "Client.h"
 
 BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType);
 
@@ -24,14 +25,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Start up network manager
-    if (NM.startUp()) {
-        LM.writeLog("ERROR: failed to start network manager!");
-        NM.shutDown();
-        GM.shutDown();
-        return 2;
-    }
-
     Util::loadResources();
 
     // Show splash screen.
@@ -40,7 +33,16 @@ int main(int argc, char** argv) {
     // Show fruit ninja splash screen
     new Splash();
 
+    // Start up network manager
+    if (NM.startUp()) {
+        LM.writeLog("ERROR: failed to start network manager!");
+        NM.shutDown();
+        GM.shutDown();
+        return 2;
+    }
+
     new ConnectionField();
+    new Client();
     
     GM.run();
 
@@ -53,6 +55,7 @@ int main(int argc, char** argv) {
     NM.sendToAll(msg);
 
     NM.setAllowSending(false);
+    NM.recieve();
     NM.recieve();
 
     NM.shutDown();

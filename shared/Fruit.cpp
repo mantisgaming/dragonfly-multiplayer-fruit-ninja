@@ -8,6 +8,7 @@
 
 #include "NetworkManager.h"
 #include "Sword.h"
+#include "EventScore.h"
 
 void Fruit::explode() {
     #ifdef CLIENT
@@ -53,6 +54,9 @@ int Fruit::out(const df::EventOut* p_e) {
         if (!isExiting()) { return 1; }
 
         // TODO trigger fruit miss event
+        EventScore ev(-1, -10);
+        WM.onEvent(&ev);
+
 
         WM.markForDelete(this);
         return 1;
@@ -68,10 +72,11 @@ int Fruit::collide(const df::EventCollision* p_e) {
             m_playSound = true;
             synchronize();
 
-            // TODO add points
-            //// Add points.
-            //df::EventView ev(POINTS_STRING, +10, true);
-            //WM.onEvent(&ev);
+            Sword* sword = dynamic_cast<Sword*>(p_e->getObject1());
+
+            // Add points.
+            EventScore ev(sword->getPlayerID(), +10);
+            WM.onEvent(&ev);
 
             WM.markForDelete(this);
         }
