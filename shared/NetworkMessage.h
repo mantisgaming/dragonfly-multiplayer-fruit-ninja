@@ -12,6 +12,7 @@ public:
 		DISCONNECT,
 		ASSIGN_CLIENT,
 		SWORD_POSITION,
+		GAME_OVER,
 	};
 
 	Type type;

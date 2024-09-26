@@ -23,6 +23,7 @@
     <ClCompile Include="..\shared\Util.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ConnectionField.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="mainClient.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +44,7 @@
   <ItemGroup>
     <ClInclude Include="Client.h" />
     <ClInclude Include="ConnectionField.h" />
+    <ClInclude Include="GameOver.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\sounds\beep.wav" />

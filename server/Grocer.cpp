@@ -14,6 +14,7 @@
 // Game includes.
 #include <Fruit.h>
 #include "Grocer.h"
+#include <NetworkManager.h>
 
 Grocer::Grocer() {
     setType(GROCER_STRING);
@@ -78,7 +79,9 @@ int Grocer::step(const df::EventStep* p_e) {
 // Do game over actions.
 void Grocer::gameOver() {
     // Create G-A-M-E O-V-E-R object.
-    //new GameOver();
+    
+    NetworkMessage msg = { NetworkMessage::GAME_OVER };
+    NM.sendToAll(msg);
 
     // Destroy all remaining Fruit (no points).
     df::ObjectList ol = WM.solidObjects();
@@ -87,6 +90,8 @@ void Grocer::gameOver() {
             WM.markForDelete(ol[i]);
 
     WM.markForDelete(this);
+
+    GM.setGameOver();
 }
 
 int Grocer::serialize(std::stringstream* p_ss, unsigned int mask)

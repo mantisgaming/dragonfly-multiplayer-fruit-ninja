@@ -130,6 +130,7 @@ namespace df {
 		case NetworkMessage::DISCONNECT: mystr = "Disconnect: "; break;
 		case NetworkMessage::SYNC: mystr = "Sync: "; break;
 		case NetworkMessage::ASSIGN_CLIENT: mystr = "Assign Client: "; break;
+		case NetworkMessage::GAME_OVER: mystr = "Game Over: "; break;
 		}
 
 		for (int i = 0; i < message.dataSize; ++i) {
@@ -215,6 +216,7 @@ namespace df {
 		case NetworkMessage::DISCONNECT: mystr = "Disconnect: "; break;
 		case NetworkMessage::SYNC: mystr = "Sync: "; break;
 		case NetworkMessage::ASSIGN_CLIENT: mystr = "Assign Client: "; break;
+		case NetworkMessage::GAME_OVER: mystr = "Game Over: "; break;
 		}
 
 		for (int i = 0; i < message.dataSize; ++i) {
@@ -225,7 +227,7 @@ namespace df {
 		}
 		LM.writeLog("INFO: Recieved data packet: %s", mystr.c_str());
 
-		return dataSize;
+		return totalSize;
 	}
 
 	int NetworkSocket::close() {

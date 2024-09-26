@@ -5,6 +5,8 @@
 #include <NetworkObject.h>
 #include <Fruit.h>
 
+#include "GameOver.h"
+
 Client* Client::instance = NULL;
 
 int Client::dataHandler(const df::EventNetwork* p_e) {
@@ -20,6 +22,9 @@ int Client::dataHandler(const df::EventNetwork* p_e) {
         p_e->getSocket()->close();
         return 1;
 
+    case NetworkMessage::GAME_OVER:
+        new GameOver();
+        return 1;
     default:
         return 0;
     }
