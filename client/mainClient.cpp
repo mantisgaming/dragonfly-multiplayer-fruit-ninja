@@ -5,6 +5,7 @@
 #include <Util.h>
 #include "ConnectionField.h"
 #include <NetworkSocket.h>
+#include "Splash.h"
 
 BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType);
 
@@ -35,6 +36,9 @@ int main(int argc, char** argv) {
 
     // Show splash screen.
     df::splash();
+
+    // Show fruit ninja splash screen
+    new Splash();
 
     new ConnectionField();
     
