@@ -44,19 +44,12 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		if (m_playerID != (int8_t)message->data[0]) return 0;
 
 		df::Vector pos;
-		m_old_position = getPosition();
 		pos.setXY(*reinterpret_cast<const float*>(&message->data[1]), *reinterpret_cast<const float*>(&message->data[5]));
 
 		setPosition(pos);
 		synchronize();
 
 		handleCollisions();
-
-		if (m_sliced > 2 && m_sliced > m_old_sliced) {
-			// Extra points.
-			auto ev = EventScore(m_playerID, 50);
-			WM.onEvent(&ev);
-		}
 
 		return 1;
 	}
@@ -85,6 +78,7 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 				RM.getSound(sound)->play();
 			}
 		}
+		m_old_sliced = m_sliced;
 
 		return 1;
 
@@ -92,6 +86,15 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		return 0;
 	}
 #endif
+}
+
+int Sword::stepHandler(df::EventStep* p_e) {
+	if (m_old_position == getPosition()) {
+		m_sliced = 0;
+	}
+
+	m_old_position = getPosition();
+	return 1;
 }
 
 void Sword::handleCollisions() {
@@ -113,6 +116,12 @@ void Sword::handleCollisions() {
 			df::EventCollision c(this, p_o, p_o->getPosition());
 			p_o->eventHandler(&c);
 			m_sliced += 1;
+
+			if (m_sliced > 2 && m_sliced > m_old_sliced) {
+				// Extra points.
+				auto ev = EventScore(m_playerID, 50);
+				WM.onEvent(&ev);
+			}
 
 			m_old_sliced = m_sliced;
 
@@ -144,10 +153,9 @@ Sword::Sword() : NetworkObject(SWORD_TYPE_ID) {
 		WM.getBoundary().getVertical() / 2);
 	setPosition(p);
 
-	m_old_position = p;
-
 	registerInterest(df::MSE_EVENT);
 	registerInterest(df::NETWORK_EVENT);
+	registerInterest(df::STEP_EVENT);
 }
 
 int Sword::subEventHandler(const df::Event* p_e) {
@@ -157,6 +165,9 @@ int Sword::subEventHandler(const df::Event* p_e) {
 	if (p_e->getType() == df::NETWORK_EVENT)
 		return networkHandler((df::EventNetwork*)p_e);
 
+	if (p_e->getType() == df::STEP_EVENT)
+		return stepHandler((df::EventStep*)p_e);
+
 	return 0;
 }
 
@@ -165,7 +176,6 @@ int Sword::serialize(std::stringstream* p_ss, unsigned int attr) {
 
 	m_old_position.serialize(p_ss);
 	p_ss->write(reinterpret_cast<char*>(&m_sliced),sizeof(m_sliced));
-	p_ss->write(reinterpret_cast<char*>(&m_old_sliced), sizeof(m_old_sliced));
 	p_ss->write(reinterpret_cast<char*>(&m_mana), sizeof(m_mana));
 	p_ss->write(reinterpret_cast<char*>(&m_playerID), sizeof(m_playerID));
 
@@ -178,7 +188,6 @@ int Sword::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
 
 	m_old_position.deserialize(p_ss);
 	p_ss->read(reinterpret_cast<char*>(&m_sliced), sizeof(m_sliced));
-	p_ss->read(reinterpret_cast<char*>(&m_old_sliced), sizeof(m_old_sliced));
 	p_ss->read(reinterpret_cast<char*>(&m_mana), sizeof(m_mana));
 	p_ss->read(reinterpret_cast<char*>(&m_playerID), sizeof(m_playerID));
 

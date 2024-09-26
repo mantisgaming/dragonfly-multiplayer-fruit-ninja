@@ -25,6 +25,7 @@ private:
 
 	int mouseHandler(df::EventMouse* p_e);
 	int networkHandler(df::EventNetwork* p_e);
+	int stepHandler(df::EventStep* p_e);
 	void handleCollisions();
 public:
 	Sword();
