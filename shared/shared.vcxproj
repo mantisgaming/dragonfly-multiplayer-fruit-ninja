@@ -14,6 +14,7 @@
     <ClInclude Include="EventNetwork.h" />
     <ClInclude Include="EventScore.h" />
     <ClInclude Include="Fruit.h" />
+    <ClInclude Include="Kudos.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="NetworkMessage.h" />
     <ClInclude Include="NetworkObject.h" />
@@ -29,6 +30,7 @@
     <ClCompile Include="EventNetwork.cpp" />
     <ClCompile Include="EventScore.cpp" />
     <ClCompile Include="Fruit.cpp" />
+    <ClCompile Include="Kudos.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="NetworkObject.cpp" />
     <ClCompile Include="NetworkSentry.cpp" />

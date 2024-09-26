@@ -10,6 +10,8 @@
 #include "NetworkManager.h"
 #include "Util.h"
 #include "Fruit.h"
+#include "EventScore.h"
+#include "Kudos.h"
 
 int Sword::mouseHandler(df::EventMouse* p_e) {
 	if (!belongsToClient()) {
@@ -50,6 +52,12 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 
 		handleCollisions();
 
+		if (m_sliced > 2 && m_sliced > m_old_sliced) {
+			// Extra points.
+			auto ev = EventScore(m_playerID, 50);
+			WM.onEvent(&ev);
+		}
+
 		return 1;
 	}
 	case NetworkMessage::DISCONNECT:
@@ -66,10 +74,8 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		
 		Util::drawTrail(getPosition(), m_old_position, getColor());
 
-		// TODO spawn kudos
-		//// Spawn kudos for combo.
-		//if (m_sliced > 2 && m_sliced > m_old_sliced)
-		//	new Kudos();
+		if (m_sliced > 2 && m_sliced > m_old_sliced)
+			new Kudos();
 
 		// If travel far enough, play "swipe" sound.
 		{

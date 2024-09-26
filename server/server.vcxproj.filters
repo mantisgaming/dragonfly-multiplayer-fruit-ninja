@@ -112,6 +112,9 @@
     <ClCompile Include="..\shared\EventScore.cpp">
       <Filter>Source Files\Shared</Filter>
     </ClCompile>
+    <ClCompile Include="..\shared\Kudos.cpp">
+      <Filter>Source Files\Shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="@(_SharedIncludes)" />
