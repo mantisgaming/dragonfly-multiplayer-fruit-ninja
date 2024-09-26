@@ -65,9 +65,14 @@ int Fruit::collide(const df::EventCollision* p_e) {
     #ifdef SERVER
         if (p_e->getObject1()->getType() == SWORD_STRING) {
 
-            // TODO trigger fruit hit event
             m_playSound = true;
             synchronize();
+
+            // TODO add points
+            //// Add points.
+            //df::EventView ev(POINTS_STRING, +10, true);
+            //WM.onEvent(&ev);
+
             WM.markForDelete(this);
         }
         return 1;

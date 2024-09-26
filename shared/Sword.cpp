@@ -64,6 +64,19 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 		if (getNetworkID() != (int8_t)message->data[0]) return 0;
 		
 		Util::drawTrail(getPosition(), m_old_position, getColor());
+
+		// TODO spawn kudos
+		//// Spawn kudos for combo.
+		//if (m_sliced > 2 && m_sliced > m_old_sliced)
+		//	new Kudos();
+
+		// If travel far enough, play "swipe" sound.
+		float dist = df::distance(getPosition(), m_old_position);
+		if (dist > 15) {
+			std::string sound = "swipe-" + std::to_string(rand() % 7 + 1);
+			play_sound(sound);
+		}
+
 		return 1;
 
 	default:
@@ -92,13 +105,15 @@ void Sword::handleCollisions() {
 			p_o->eventHandler(&c);
 			m_sliced += 1;
 
-			//// Spawn kudos for combo.
-			//if (m_sliced > 2 && m_sliced > m_old_sliced)
-			//	new Kudos();
-
 			m_old_sliced = m_sliced;
 
 		}
+
+		// TODO lose points
+		// Lose points for distance traveled
+		//int penalty = -1 * (int)(dist / 10.0f);
+		//df::EventView ev(POINTS_STRING, penalty, true);
+		//WM.onEvent(&ev);
 
 	}
 
