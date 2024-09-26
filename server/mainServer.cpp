@@ -53,7 +53,6 @@ int main(int argc, char** argv) {
 
     // create server
     new Server();
-    new Grocer();
 
     // run server
     GM.run();

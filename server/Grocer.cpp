@@ -13,6 +13,7 @@
 
 // Game includes.
 #include <Fruit.h>
+#include <Timer.h>
 #include "Grocer.h"
 #include <NetworkManager.h>
 
@@ -26,6 +27,10 @@ Grocer::Grocer() {
     m_wave_speed = WAVE_SPEED; // Starting speed (spaces/tick).
     m_wave_spawn = WAVE_SPAWN; // Starting spawn rate (ticks).
     m_spawn = m_wave_spawn;
+
+    auto timer = new Timer();
+    timer->alocateObject();
+    timer->synchronize();
 }
 
 // Handle event.
@@ -90,8 +95,6 @@ void Grocer::gameOver() {
             WM.markForDelete(ol[i]);
 
     WM.markForDelete(this);
-
-    GM.setGameOver();
 }
 
 int Grocer::serialize(std::stringstream* p_ss, unsigned int mask)

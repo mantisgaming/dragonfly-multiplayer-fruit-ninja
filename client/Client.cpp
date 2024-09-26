@@ -6,6 +6,7 @@
 #include <Fruit.h>
 
 #include "GameOver.h"
+#include "StartButton.h"
 
 Client* Client::instance = NULL;
 
@@ -24,6 +25,10 @@ int Client::dataHandler(const df::EventNetwork* p_e) {
 
     case NetworkMessage::GAME_OVER:
         new GameOver();
+        return 1;
+
+    case NetworkMessage::SHOW_START_PROMPT:
+        new StartButton();
         return 1;
     default:
         return 0;

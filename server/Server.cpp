@@ -2,8 +2,10 @@
 
 #include <LogManager.h>
 #include <NetworkManager.h>
-#include <Timer.h>
 #include <Sword.h>
+#include <GameManager.h>
+
+#include "Grocer.h"
 
 int Server::dataHandler(const df::EventNetwork* p_e) {
     LM.writeLog("INFO: Data received");
@@ -13,6 +15,13 @@ int Server::dataHandler(const df::EventNetwork* p_e) {
     case NetworkMessage::DISCONNECT:
         SetPlayerIDUsed(message.data[0], false);
         NM.close(p_e->getSocket());
+        if (NM.getConnectionCount() == 0)
+            GM.setGameOver();
+        return 1;
+
+    case NetworkMessage::START_GAME:
+        m_hasStarted = true;
+        new Grocer();
         return 1;
 
     default:
@@ -23,20 +32,27 @@ int Server::dataHandler(const df::EventNetwork* p_e) {
 int Server::acceptHandler(const df::EventNetwork* p_e)
 {
     LM.writeLog("INFO: Accepted connection");
+
     auto ID = getFirstAvailablePlayerID();
 
-    char data = ID;
-
-    NetworkMessage msg = { NetworkMessage::ASSIGN_CLIENT, &data, 1 };
+    // assign the player ID
+    NetworkMessage msg = { NetworkMessage::ASSIGN_CLIENT, reinterpret_cast<char*>(&ID), 1};
     p_e->getSocket()->send(msg);
 
-    if (ID < 4 && ID >= 0) {
+    // spawn a sword for the player, if they are one of the first 4 and the game has not started yet
+    if (ID < 4 && ID >= 0 && !m_hasStarted) {
         SetPlayerIDUsed(ID);
 
         auto sword = new Sword();
         sword->setPlayerID(ID);
         sword->alocateObject();
         sword->synchronize();
+    }
+
+    // give player 0 the start prompt if the game has not started yet
+    if (ID == 0 && !m_hasStarted) {
+        msg = { NetworkMessage::SHOW_START_PROMPT };
+        p_e->getSocket()->send(msg);
     }
 
     return 1;
@@ -94,9 +110,7 @@ void Server::SetPlayerIDUsed(int8_t ID, bool used) {
 Server::Server() {
     registerInterest(df::NETWORK_EVENT);
     m_playersUsed = 0;
-    auto timer = new Timer();
-    timer->alocateObject();
-    timer->synchronize();
+    m_hasStarted = false;
 }
 
 int Server::eventHandler(const df::Event* p_e)

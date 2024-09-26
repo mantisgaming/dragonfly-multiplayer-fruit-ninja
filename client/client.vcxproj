@@ -25,6 +25,7 @@
     <ClCompile Include="ConnectionField.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="mainClient.cpp" />
+    <ClCompile Include="StartButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="df-config.txt" />
@@ -45,6 +46,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="ConnectionField.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="StartButton.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\sounds\beep.wav" />

@@ -13,6 +13,8 @@ public:
 		ASSIGN_CLIENT,
 		SWORD_POSITION,
 		GAME_OVER,
+		START_GAME,
+		SHOW_START_PROMPT,
 	};
 
 	Type type;
