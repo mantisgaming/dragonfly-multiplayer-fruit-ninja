@@ -15,7 +15,7 @@ int Server::dataHandler(const df::EventNetwork* p_e) {
     case NetworkMessage::DISCONNECT:
         SetPlayerIDUsed(message.data[0], false);
         NM.close(p_e->getSocket());
-        if (NM.getConnectionCount() == 0)
+        if (m_playersUsed == 0)
             GM.setGameOver();
         return 1;
 
