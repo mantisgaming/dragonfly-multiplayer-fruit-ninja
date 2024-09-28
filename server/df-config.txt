@@ -34,7 +34,7 @@ frame_time:33,
 window_style:default,
 
 # Window title.
-window_title:Dragonfly,
+window_title:Fruit Ninja Server,
 
 # Show mouse cursor.
 show_mouse:false,
