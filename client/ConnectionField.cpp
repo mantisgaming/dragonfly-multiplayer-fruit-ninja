@@ -6,6 +6,7 @@
 #include <GameManager.h>
 
 #include "Client.h"
+#include "PingView.h"
 
 int parseAddress(const std::string& input, std::string& address, uint16_t& port) {
     
@@ -65,5 +66,6 @@ void ConnectionField::callback() {
 
     LM.writeLog("INFO: ConnectionBox::callback(): Connection succeeded");
 
+    new PingView();
     WM.markForDelete(this);
 }

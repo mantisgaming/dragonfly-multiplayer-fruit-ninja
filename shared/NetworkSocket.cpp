@@ -90,7 +90,7 @@ namespace df {
 		return 0;
 	}
 
-	int NetworkSocket::send(NetworkMessage& message) {
+	int NetworkSocket::send(const NetworkMessage& message) {
 		REQUIRE_SOCKET;
 
 		std::stringstream stream;
@@ -98,7 +98,7 @@ namespace df {
 		uint16_t totalDataSize = sizeof(totalDataSize) + sizeof(message.type) + message.dataSize;
 
 		stream.write(reinterpret_cast<char*>(&totalDataSize), sizeof(totalDataSize));
-		stream.write(reinterpret_cast<char*>(&message.type), sizeof(message.type));
+		stream.write(reinterpret_cast<const char*>(&message.type), sizeof(message.type));
 
 		if (message.dataSize > 0)
 			stream.write(message.data, message.dataSize);

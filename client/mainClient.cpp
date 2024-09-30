@@ -3,8 +3,10 @@
 #include <LogManager.h>
 #include <NetworkManager.h>
 #include <Util.h>
-#include "ConnectionField.h"
 #include <NetworkSocket.h>
+#include <PingManager.h>
+
+#include "ConnectionField.h"
 #include "Splash.h"
 #include "Client.h"
 
@@ -43,6 +45,7 @@ int main(int argc, char** argv) {
 
     new ConnectionField();
     new Client();
+    new PingManager();
     
     GM.run();
 

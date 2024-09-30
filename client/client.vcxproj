@@ -29,6 +29,7 @@
     <ClCompile Include="ConnectionField.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="mainClient.cpp" />
+    <ClCompile Include="PingView.cpp" />
     <ClCompile Include="Splash.cpp" />
     <ClCompile Include="StartButton.cpp" />
   </ItemGroup>
@@ -51,6 +52,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="ConnectionField.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="PingView.h" />
     <ClInclude Include="Splash.h" />
     <ClInclude Include="StartButton.h" />
   </ItemGroup>

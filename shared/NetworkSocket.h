@@ -27,7 +27,7 @@ namespace df {
 
 		int connect(ULONG address, u_short port);
 
-		int send(NetworkMessage& message);
+		int send(const NetworkMessage& message);
 		int receive(NetworkMessage& message);
 
 		int close();

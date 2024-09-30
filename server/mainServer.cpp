@@ -6,6 +6,8 @@
 #include "Grocer.h"
 #include <Util.h>
 
+#include <PingManager.h>
+
 BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType);
 
 int main(int argc, char** argv) {
@@ -53,6 +55,7 @@ int main(int argc, char** argv) {
 
     // create server
     new Server();
+    new PingManager();
 
     // run server
     GM.run();

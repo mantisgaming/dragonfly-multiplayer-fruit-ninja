@@ -54,7 +54,7 @@ int Score::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
 
     if (m_playerID != oldID) {
         if (m_playerID == NM.getClientID()) {
-            setLocation(df::TOP_RIGHT);
+            setLocation(df::TOP_CENTER);
         } else {
             setLocation(positions[positionIndex % 3]);
             positionIndex++;

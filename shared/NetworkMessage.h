@@ -15,6 +15,7 @@ public:
 		GAME_OVER,
 		START_GAME,
 		SHOW_START_PROMPT,
+		PING
 	};
 
 	Type type;
