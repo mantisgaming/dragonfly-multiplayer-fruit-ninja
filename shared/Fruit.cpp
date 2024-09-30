@@ -5,6 +5,7 @@
 #include <GameManager.h>
 #include <ResourceManager.h>
 #include <EventView.h>
+#include <PingManager.h>
 
 #include "NetworkManager.h"
 #include "Sword.h"
@@ -174,5 +175,16 @@ int Fruit::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
     p_ss->read(reinterpret_cast<char*>(&m_playSound), 1);
 
     int ok = Object::deserialize(p_ss, p_a) | !p_ss->good();
+
+    df::Vector pos = getPosition();
+    df::Vector vel = getVelocity();
+
+    vel.setX(PingManager::ping * vel.getX());
+    vel.setY(PingManager::ping * vel.getY());
+
+    df::Vector newPos = pos + vel;
+
+    setPosition(newPos);
+
     return ok;
 }

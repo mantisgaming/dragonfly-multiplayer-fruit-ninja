@@ -10,11 +10,11 @@ class PingManager : df::Object {
 private:
 	#ifdef CLIENT
 	int m_timer;
-	int m_ping;
 	#endif
 	int stepHandler(const df::EventStep* p_e);
 	int networkHandler(const df::EventNetwork* p_e);
 public:
+	static int ping;
 	PingManager();
 	int eventHandler(const df::Event* p_e) override;
 

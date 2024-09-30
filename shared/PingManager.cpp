@@ -5,6 +5,9 @@
 #include <NetworkManager.h>
 #include <EventView.h>
 
+
+int PingManager::ping = 0;
+
 int PingManager::stepHandler(const df::EventStep* p_e) {
 #ifdef CLIENT
     if (m_timer <= 0) {
@@ -37,9 +40,9 @@ int PingManager::networkHandler(const df::EventNetwork* p_e) {
     int sendTime = *reinterpret_cast<const int*>(message->data);
     int time = GM.getStepCount();
 
-    m_ping = time - sendTime;
+    ping = time - sendTime;
 
-    df::EventView ev = df::EventView("Ping: ", m_ping * GM.getFrameTime(), false);
+    df::EventView ev = df::EventView("Ping: ", ping * GM.getFrameTime(), false);
     WM.onEvent(&ev);
 
 #else
@@ -54,7 +57,7 @@ PingManager::PingManager() {
 
 #ifdef CLIENT
     m_timer = 0;
-    m_ping = 0;
+    ping = 0;
     registerInterest(df::STEP_EVENT);
 #endif
 }
