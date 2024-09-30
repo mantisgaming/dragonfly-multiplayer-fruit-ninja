@@ -26,6 +26,8 @@ int Sword::mouseHandler(df::EventMouse* p_e) {
 	*reinterpret_cast<float*>(&data[1]) = mousePos.getX();
 	*reinterpret_cast<float*>(&data[5]) = mousePos.getY();
 
+	setPosition(df::Vector(mousePos.getX(), mousePos.getY()));
+
 	NetworkMessage msg = { NetworkMessage::SWORD_POSITION, data, 9 };
 	NM.sendToAll(msg);
 
@@ -184,6 +186,10 @@ int Sword::serialize(std::stringstream* p_ss, unsigned int attr) {
 }
 
 int Sword::deserialize(std::stringstream* p_ss, unsigned int* p_a) {
+
+	if (belongsToClient())
+		return 0;
+
 	int ok = Object::deserialize(p_ss, p_a);
 
 	m_old_position.deserialize(p_ss);
