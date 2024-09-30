@@ -21,6 +21,7 @@
     <ClInclude Include="NetworkSentry.h" />
     <ClInclude Include="NetworkSocket.h" />
     <ClInclude Include="NetworkUtil.h" />
+    <ClInclude Include="PingManager.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Timer.h" />
@@ -36,6 +37,7 @@
     <ClCompile Include="NetworkSentry.cpp" />
     <ClCompile Include="NetworkSocket.cpp" />
     <ClCompile Include="NetworkUtil.cpp" />
+    <ClCompile Include="PingManager.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Timer.cpp" />

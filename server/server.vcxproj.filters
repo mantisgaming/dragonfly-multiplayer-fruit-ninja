@@ -115,6 +115,9 @@
     <ClCompile Include="..\shared\Kudos.cpp">
       <Filter>Source Files\Shared</Filter>
     </ClCompile>
+    <ClCompile Include="..\shared\PingManager.cpp">
+      <Filter>Source Files\Shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="@(_SharedIncludes)" />

@@ -179,33 +179,6 @@
     <ClInclude Include="src\Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fruit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkSentry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkSocket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sword.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Fruit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -243,6 +216,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Kudos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PingManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -284,6 +260,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Kudos.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PingManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
