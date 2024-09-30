@@ -22,6 +22,7 @@ namespace df {
 		int8_t m_clientID;
 
 		bool m_allowSending;
+		int m_delay;
 
 		NetworkManager();
 		NetworkManager(NetworkManager& other);
@@ -43,7 +44,9 @@ namespace df {
 		void accept();
 		void sendToAll(NetworkMessage& message);
 		void recieve();
+		void flush();
 		int connect(std::string address, uint16_t port);
+		void setDelay(int delay);
 
 		void close(NetworkSocket* sock);
 		void closeAll();

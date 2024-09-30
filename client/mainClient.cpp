@@ -46,6 +46,8 @@ int main(int argc, char** argv) {
     new ConnectionField();
     new Client();
     new PingManager();
+
+    NM.setDelay(5);
     
     GM.run();
 

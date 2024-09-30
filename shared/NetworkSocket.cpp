@@ -1,6 +1,7 @@
 #include "NetworkSocket.h"
 
 #include <LogManager.h>
+#include <GameManager.h>
 #include <sstream>
 
 #include "NetworkUtil.h"
@@ -43,6 +44,7 @@ namespace df {
 
 	NetworkSocket::NetworkSocket() {
 		m_sock = -1;
+		m_delay = 0;
 	}
 
 	NetworkSocket::~NetworkSocket()
@@ -103,22 +105,29 @@ namespace df {
 		if (message.dataSize > 0)
 			stream.write(message.data, message.dataSize);
 
-		if (::send(m_sock, stream.str().c_str(), totalDataSize, 0) < 0) {
-			switch (WSAGetLastError()) {
-			case WSAEWOULDBLOCK:
-				return 0;
-			case WSAECONNABORTED:
-			case WSAECONNRESET:
-				LM.writeLog("INFO: A connection was reset");
-				{
-					EventNetwork e = EventNetwork(this, EventNetwork::Label::CLOSE);
-					WM.onEvent(&e);
+		if (m_delay > 0) {
+			auto data = new char[totalDataSize];
+			memcpy(data, stream.str().c_str(), totalDataSize);
+			m_delayQueue.emplace(m_delay + GM.getStepCount(), data, totalDataSize);
+		} else {
+
+			if (::send(m_sock, stream.str().c_str(), totalDataSize, 0) < 0) {
+				switch (WSAGetLastError()) {
+				case WSAEWOULDBLOCK:
+					return 0;
+				case WSAECONNABORTED:
+				case WSAECONNRESET:
+					LM.writeLog("INFO: A connection was reset");
+					{
+						EventNetwork e = EventNetwork(this, EventNetwork::Label::CLOSE);
+						WM.onEvent(&e);
+					}
+					close();
+					return -1;
+				default:
+					logNetworkError("WARNING: send() failed");
+					return -1;
 				}
-				close();
-				return -1;
-			default:
-				logNetworkError("WARNING: send() failed");
-				return -1;
 			}
 		}
 
@@ -230,6 +239,40 @@ namespace df {
 		return totalSize;
 	}
 
+	int NetworkSocket::flush() {
+		while (m_delayQueue.size() > 0) {
+			DelayedMessage m = m_delayQueue.front();
+			if (std::get<0>(m) > GM.getStepCount())
+				return 0;
+
+			char* data = std::get<1>(m);
+			int size = std::get<2>(m);
+
+			if (::send(m_sock, data, size, 0) < 0) {
+				switch (WSAGetLastError()) {
+				case WSAEWOULDBLOCK:
+					return 0;
+				case WSAECONNABORTED:
+				case WSAECONNRESET:
+					LM.writeLog("INFO: A connection was reset");
+					{
+						EventNetwork e = EventNetwork(this, EventNetwork::Label::CLOSE);
+						WM.onEvent(&e);
+					}
+					close();
+					return -1;
+				default:
+					logNetworkError("WARNING: send() failed");
+					return -1;
+				}
+			}
+
+			delete[] data;
+			m_delayQueue.pop();
+		}
+		return 0;
+	}
+
 	int NetworkSocket::close() {
 		REQUIRE_SOCKET;
 
@@ -294,6 +337,10 @@ namespace df {
 		}
 		newConnection->m_sock = newSock;
 		return 0;
+	}
+
+	void NetworkSocket::setDelay(int delay) {
+		m_delay = delay;
 	}
 
 }

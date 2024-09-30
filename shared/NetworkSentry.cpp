@@ -13,6 +13,7 @@ namespace df {
     int NetworkSentry::stepHandler(const EventStep* p_event)
     {
         NM.accept();
+        NM.flush();
         NM.recieve();
         return 1;
     }

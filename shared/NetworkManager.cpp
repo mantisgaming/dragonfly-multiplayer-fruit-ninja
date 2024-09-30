@@ -18,6 +18,7 @@ namespace df {
 		m_listener = NULL;
 		m_sentry = NULL;
 		m_clientID = -1;
+		m_delay = 0;
 		m_allowSending = true;
 		m_connections.clear();
 	}
@@ -73,6 +74,8 @@ namespace df {
 				return;
 			}
 
+			sock->setDelay(m_delay);
+
 			m_connections.push_back(sock);
 
 			EventNetwork e = EventNetwork(sock, EventNetwork::Label::ACCEPT);
@@ -114,6 +117,12 @@ namespace df {
 		}
 	}
 
+	void NetworkManager::flush() {
+		for (int i = 0; i < m_connections.size(); i++) {
+			m_connections[i]->flush();
+		}
+	}
+
 	int NetworkManager::connect(std::string address, uint16_t port)
 	{
 		uint32_t ip;
@@ -122,6 +131,8 @@ namespace df {
 		}
 		
 		NetworkSocket* sock = new NetworkSocket();
+
+		sock->setDelay(m_delay);
 
 		if (sock->create()) {
 			delete sock;
@@ -135,6 +146,13 @@ namespace df {
 
 		m_connections.push_back(sock);
 		return 0;
+	}
+
+	void NetworkManager::setDelay(int delay) {
+		m_delay = delay;
+		for (int i = 0; i < getConnectionCount(); i++) {
+			m_connections[i]->setDelay(delay);
+		}
 	}
 
 	void NetworkManager::close(NetworkSocket* sock) {

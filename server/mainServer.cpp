@@ -57,6 +57,8 @@ int main(int argc, char** argv) {
     new Server();
     new PingManager();
 
+    NM.setDelay(5);
+
     // run server
     GM.run();
 
