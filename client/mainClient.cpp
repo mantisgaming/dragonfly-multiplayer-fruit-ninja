@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
     new Client();
     new PingManager();
 
-    NM.setDelay(5);
+    NM.setDelay(3);
     
     GM.run();
 

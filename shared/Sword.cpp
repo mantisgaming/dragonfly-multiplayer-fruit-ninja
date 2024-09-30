@@ -19,6 +19,9 @@ int Sword::mouseHandler(df::EventMouse* p_e) {
 		return 0;
 	}
 
+	if (p_e->getMouseAction() != df::MOVED)
+		return 0;
+
 	df::Vector mousePos = p_e->getMousePosition();
 
 	char data[9];
@@ -67,8 +70,6 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 	case NetworkMessage::SYNC:
 		if (getNetworkID() != (int8_t)message->data[0]) return 0;
 		
-		Util::drawTrail(getPosition(), m_old_position, getColor());
-
 		if (m_sliced > 2 && m_sliced > m_old_sliced && getPlayerID() == NM.getClientID())
 			new Kudos();
 
@@ -93,6 +94,9 @@ int Sword::networkHandler(df::EventNetwork* p_e) {
 int Sword::stepHandler(df::EventStep* p_e) {
 	if (m_old_position == getPosition()) {
 		m_sliced = 0;
+	}
+	else {
+		Util::drawTrail(getPosition(), m_old_position, getColor());
 	}
 
 	m_old_position = getPosition();
