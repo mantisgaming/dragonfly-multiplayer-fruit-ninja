@@ -5,8 +5,8 @@
 #include <GameManager.h>
 #include <ResourceManager.h>
 #include <EventView.h>
-#include <PingManager.h>
 
+#include "PingManager.h"
 #include "NetworkManager.h"
 #include "Sword.h"
 #include "EventScore.h"
